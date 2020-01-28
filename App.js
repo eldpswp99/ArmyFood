@@ -1,11 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import reducer from "./reducer";
+import {createStore} from "redux";
+import { Provider } from "react-redux";
+import Main from "./components/Main";
+
+let store = createStore(reducer);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <Provider store = {store}>
+			<Main />
+		</Provider>
   );
 }
 
