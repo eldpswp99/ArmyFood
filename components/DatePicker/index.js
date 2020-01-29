@@ -1,27 +1,24 @@
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
-import Main from "./presenter";
+import DatePicker from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {code,food,isLoading,year,month,day,meal} = state;
+	const {year,month,day,isDatePicker} = state;
 	
 	return {
-		code,
-		food,
-		isLoading,
 		year,
 		month,
 		day,
-		meal
+		isDatePicker
 	}
 }
 
 function mapDispatchToProps(dispatch){
 	return {
 		setDate : bindActionCreators(actionCreators.setDate,dispatch),
-		setMeal : bindActionCreators(actionCreators.setMeal,dispatch)
+		setShowDatePicker : bindActionCreators(actionCreators.setShowDatePicker,dispatch)
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+export default connect(mapStateToProps,mapDispatchToProps)(DatePicker);

@@ -13,10 +13,10 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
 	return {
-		addData,
-		loadEnd,
-		setDate,
-		setMeal
+		addData : bindActionCreators(actionCreators.addData,dispatch),
+		loadEnd : bindActionCreators(actionCreators.loadEnd,dispatch),
+		setDate : bindActionCreators(actionCreators.setDate,dispatch),
+		setMeal : bindActionCreators(actionCreators.setMeal,dispatch)
 	}
 }
 

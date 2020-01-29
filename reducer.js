@@ -7,6 +7,7 @@ const ADD_DATA = "ADD_DATA";
 const LOAD_END = "LOAD_END";
 const SET_DATE = "SET_DATE";
 const SET_MEAL = "SET_MEAL";
+const SET_SHOW_DATEPICKER = "SET_SHOW_DATEPICKER";
 
 //Action Creators
 
@@ -31,12 +32,13 @@ function loadEnd(){
 	}
 }
 
-function setDate(year,month,day){
+function setDate(year,month,day,isDatePicker){
 	return{
 		type:SET_DATE,
 		year,
 		month,
-		day
+		day,
+		isDatePicker
 	}
 }
 
@@ -44,6 +46,13 @@ function setMeal(meal){
 	return{
 		type:SET_MEAL,
 		meal
+	}
+}
+
+function setShowDatePicker(isDatePicker){
+	return{
+		type:SET_SHOW_DATEPICKER,
+		isDatePicker
 	}
 }
 
@@ -95,25 +104,28 @@ const initialState = {
 	code:undefined,
 	food:[],
 	isLoading:true,
-	year,
-	month,
-	day,
-	meal
+	year:2020,
+	month:1,
+	day:29,
+	meal:"brst",
+	isDatePicker:false
 }
 
 function reducer(state = initialState,action){
 	switch(action.type){
-		case:SET_CODE:
+		case SET_CODE:
 			return applySetCode(state,action.code);
-		case:ADD_DATA:
+		case ADD_DATA:
 			return applyAddData(state,action.code,action.data);
-		case:LOAD_END:
+		case LOAD_END:
 			return applyLoadEnd(state);
-		case:SET_DATE:
-			return applySetDate(state,action.year,action.month,action.day);
-		case:SET_MEAL:
-			return applySetMeal(state,action.meal);''
-		default:
+		case SET_DATE:
+			return applySetDate(state,action.year,action.month,action.day,action.isDatePicker);
+		case SET_MEAL:
+			return applySetMeal(state,action.meal);
+		case SET_SHOW_DATEPICKER:
+			return applySetShowDatePicker(state,action.isDatePicker);
+		default :
 			return state;
 	}
 }
@@ -144,12 +156,13 @@ function applyLoadEnd(state){
 	}
 }
 
-function applySetDate(state,year,month,day){
+function applySetDate(state,year,month,day,isDatePicker){
 	return{
 		...state,
 		year,
 		month,
-		day
+		day,
+		isDatePicker
 	}
 }
 
@@ -160,6 +173,13 @@ function applySetMeal(state,meal){
 	}
 }
 
+function applySetShowDatePicker(state,isDatePicker){
+	return{
+		...state,
+		isDatePicker
+	}
+}
+
 //Export Action Creators
 
 const actionCreators = {
@@ -167,7 +187,8 @@ const actionCreators = {
 	addData,
 	loadEnd,
 	setDate,
-	setMeal	
+	setMeal,
+	setShowDatePicker
 };
 
 export {actionCreators};

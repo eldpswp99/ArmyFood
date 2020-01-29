@@ -19,7 +19,7 @@ class Loader extends Component{
 			mealdate = new Date(mealdate.getTime() + DAY);
 		}
 		
-		setDate(mealdate.getFullYear(),mealdate.getMonth(),mealdate.getDay());
+		setDate(mealdate.getFullYear(),mealdate.getMonth()+1,mealdate.getDate(),false);
 		
 		all.map(elem => {
 			const { data : {DATA} } = await axios.get(elem.url);
@@ -37,7 +37,7 @@ class Loader extends Component{
 		
 		return(
 			<View style = {styles.container}>
-			
+			 isLoading
 			</View>
 		)
 		
