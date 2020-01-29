@@ -21,6 +21,8 @@ class Loader extends Component{
 		
 		setDate(mealdate.getFullYear(),mealdate.getMonth()+1,mealdate.getDate(),false);
 		
+		
+		//데이터파싱필요
 		all.map(elem => {
 			const { data : {DATA} } = await axios.get(elem.url);
 			addData(elem.code,DATA);
