@@ -1,17 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import reducer from "./reducer";
-import {createStore} from "redux";
 import { Provider } from "react-redux";
 import Main from "./components/Main";
+import configureStore from "./configureStore";
+import { PersistGate } from 'redux-persist/es/integration/react';
 
-let store = createStore(reducer);
+const { store, persistor } = configureStore();
 
 export default function App() {
   return (
-  		<Provider store = {store}>
-			<Main />
-		</Provider>
+	  <Provider store={store}>
+		<PersistGate loading={null} persistor={persistor}>
+		  <Main />
+		</PersistGate>
+	  </Provider>
   );
 }
 

@@ -7,6 +7,8 @@ class Main extends Component{
 	
 	render(){
 		
+		const {code,food,isLoading,year,month,day,meal} = this.props;
+		
 		return(
 			<View>
 				<Header

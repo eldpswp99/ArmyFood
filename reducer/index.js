@@ -8,6 +8,7 @@ const LOAD_END = "LOAD_END";
 const SET_DATE = "SET_DATE";
 const SET_MEAL = "SET_MEAL";
 const SET_SHOW_DATEPICKER = "SET_SHOW_DATEPICKER";
+const SET_SHOW_SETTING = "SET_SHOW_SETTING";
 
 //Action Creators
 
@@ -53,6 +54,13 @@ function setShowDatePicker(isDatePicker){
 	return{
 		type:SET_SHOW_DATEPICKER,
 		isDatePicker
+	}
+}
+
+function setShowSetting(isSetting){
+	return{
+		type:SET_SHOW_SETTING,
+		isSetting
 	}
 }
 
@@ -108,7 +116,8 @@ const initialState = {
 	month:1,
 	day:29,
 	meal:"brst",
-	isDatePicker:false
+	isDatePicker:false,
+	isSetting:false
 }
 
 function reducer(state = initialState,action){
@@ -125,6 +134,8 @@ function reducer(state = initialState,action){
 			return applySetMeal(state,action.meal);
 		case SET_SHOW_DATEPICKER:
 			return applySetShowDatePicker(state,action.isDatePicker);
+		case SET_SHOW_SETTING:
+			return applySetShowSetting(state.action.isSetting);
 		default :
 			return state;
 	}
@@ -180,6 +191,13 @@ function applySetShowDatePicker(state,isDatePicker){
 	}
 }
 
+function applySetShowSetting(state,isSetting){
+	return{
+		...state,
+		isSetting
+	}
+}
+
 //Export Action Creators
 
 const actionCreators = {
@@ -188,7 +206,8 @@ const actionCreators = {
 	loadEnd,
 	setDate,
 	setMeal,
-	setShowDatePicker
+	setShowDatePicker,
+	setShowSetting
 };
 
 export {actionCreators};
