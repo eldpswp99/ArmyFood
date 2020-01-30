@@ -1,7 +1,10 @@
 import React,{Component} from "react";
 import {View, Text,StyleSheet,StatusBar} from "react-native";
-import DatePicker from "../DatePicker"
+import DatePicker from "../../components/DatePicker"
 import { Header } from 'react-native-elements';
+import Loader from "../../components/Loader";
+import Setting from "../Setting";
+import SettingIcon from "../../components/SettingIcon";
 
 class Main extends Component{
 	
@@ -9,14 +12,16 @@ class Main extends Component{
 		
 		const {code,food,isLoading,year,month,day,meal} = this.props;
 		
-		return(
+		if(isLoading) return <Loader/>;
+		if(!code) return <Setting/>
+		
+		return
+		(
 			<View>
 				<Header
 					statusBarProps={{ barStyle: 'light-content' }}
-  					barStyle="light-content"
-					leftComponent = {{icon : "menu",color:"#fff"}}	 
-					centerComponent = {<DatePicker/>}
-					rightComponent = {{icon : "settings", color:"#fff"}}
+					leftComponent = {<DatePicker/>}
+					rightComponent = {<SettingIcon/>}
 				/>
 				<View style = {styles.container}>
 				

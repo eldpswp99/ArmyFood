@@ -68,47 +68,18 @@ function setShowSetting(isSetting){
 
 const initialState = {
 	all : [
-		{
-			code : "TRAIN",
-			url : "#"
-	},
-		{
-		code : "OSNO",
-		url : "#"
-	},
-		{
-		code : "TOSO",
-		url : "#"
-	},
-		{
-		code : "TTEN",
-		url : "#"
-	},
-		{
-		code : "FTTT",
-		url : "#"
-	},
-		{
-		code : "STET",
-		url : "#"
-	},
-		{
-		code : "STTF",
-		url : "#"
-	},
-		{
-		code : "ENZT",
-		url : "#"
-	},
-		
-		{
-		code : "NZTZ",
-		url : "#"
-	},
-		{
-		code : "TTTT",
-		url : "#"
-	}],
+		"ATC",
+		"1691",
+		"2171",
+		"3389",
+		"5322",
+		"6282",
+		"6335",
+		"8902",
+		"9030",
+		"7369",
+		"3333"
+	],
 	code:undefined,
 	food:[],
 	isLoading:true,

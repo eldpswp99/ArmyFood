@@ -23,9 +23,11 @@ class Loader extends Component{
 		
 		
 		//데이터파싱필요
-		all.map(elem => {
-			const { data : {DATA} } = await axios.get(elem.url);
-			addData(elem.code,DATA);
+		all.map(code => {
+			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
+			const KEY = "#";
+			const { data : {DATA} } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE});
+			addData(code,DATA);
 		})
 	
 		loadEnd();
