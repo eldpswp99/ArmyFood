@@ -1,12 +1,12 @@
 //Import
-
+import * as Enums from "../Enums";
 //Actions
 
 const SET_CODE = "SET_CODE";
 const ADD_DATA = "ADD_DATA";
 const LOAD_END = "LOAD_END";
 const SET_DATE = "SET_DATE";
-const SET_MEAL = "SET_MEAL";
+const NEXT_MEAL = "NEXT_MEAL";
 const SET_SHOW_DATEPICKER = "SET_SHOW_DATEPICKER";
 const SET_SHOW_SETTING = "SET_SHOW_SETTING";
 
@@ -43,9 +43,9 @@ function setDate(year,month,day,isDatePicker){
 	}
 }
 
-function setMeal(meal){
+function nextMeal(meal){
 	return{
-		type:SET_MEAL,
+		type:NEXT_MEAL,
 		meal
 	}
 }
@@ -57,10 +57,10 @@ function setShowDatePicker(isDatePicker){
 	}
 }
 
-function setShowSetting(isSetting){
+function setShowSetting(setShowSettingModal){
 	return{
 		type:SET_SHOW_SETTING,
-		isSetting
+		setShowSettingModal
 	}
 }
 
@@ -88,7 +88,10 @@ const initialState = {
 	day:29,
 	meal:"brst",
 	isDatePicker:false,
-	isSetting:false
+	isSettingMain:false,
+	isSettingCode:false,
+	isSettingAllergic:false,
+	isWhoDev:false
 }
 
 function reducer(state = initialState,action){
@@ -101,12 +104,12 @@ function reducer(state = initialState,action){
 			return applyLoadEnd(state);
 		case SET_DATE:
 			return applySetDate(state,action.year,action.month,action.day,action.isDatePicker);
-		case SET_MEAL:
-			return applySetMeal(state,action.meal);
+		case NEXT_MEAL:
+			return applyNextMeal(state,action.meal);
 		case SET_SHOW_DATEPICKER:
 			return applySetShowDatePicker(state,action.isDatePicker);
 		case SET_SHOW_SETTING:
-			return applySetShowSetting(state.action.isSetting);
+			return applySetShowSetting(state,action.setShowSettingModal);
 		default :
 			return state;
 	}
@@ -148,10 +151,24 @@ function applySetDate(state,year,month,day,isDatePicker){
 	}
 }
 
-function applySetMeal(state,meal){
+function applyNextMeal(state,meal){
+	let nextmeal;
+	
+	switch(meal){
+		case "brst":
+			nextmeal="lunc";
+			break;
+		case "lunc":
+			nextmeal="dinr";
+			break;
+		case "dinr":
+			nextmeal="brst";
+			break;
+	}
+	
 	return{
 		...state,
-		meal
+		meal:nextmeal
 	}
 }
 
@@ -162,10 +179,33 @@ function applySetShowDatePicker(state,isDatePicker){
 	}
 }
 
-function applySetShowSetting(state,isSetting){
+function applySetShowSetting(state,setShowSettingModal){
+	let isSettingMain,isSettingCode,isSettingAllergic,isWhoDev;
+	isSettingMain = isSettingCode = isSettingAllergic = isWhoDev = false;
+	
+	switch(setShowSettingModal){
+		case Enums.SHOW_SET_NONE:
+			break;
+		case Enums.SHOW_SET_MAIN:
+			isSettingMain = true;
+			break;
+		case Enums.SHOW_SET_CODE:
+			isSettingCode = true;
+			break;
+		case Enums.SHOW_SET_ALLERGIC:
+			isSettingAllergic = true;
+			break;
+		case Enums.SHOW_WHO_DEV:
+			isWhoDev = true;
+			break;
+	}
+	
 	return{
 		...state,
-		isSetting
+		isSettingMain,
+		isSettingCode,
+		isSettingAllergic,
+		isWhoDev
 	}
 }
 
@@ -176,7 +216,7 @@ const actionCreators = {
 	addData,
 	loadEnd,
 	setDate,
-	setMeal,
+	nextMeal,
 	setShowDatePicker,
 	setShowSetting
 };

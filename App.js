@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from "react-redux";
-import Navigator from "./Navigator";
-import configureStore from "./src/reducer/configureStore";
+import Main from "./src/components/Main";
+import configureStore from "./src/configureStore";
 import { PersistGate } from 'redux-persist/es/integration/react';
 
 const { store, persistor } = configureStore();
@@ -11,7 +11,7 @@ export default function App() {
   return (
 	  <Provider store={store}>
 		<PersistGate loading={null} persistor={persistor}>
-		  <Navigator />
+		  <Main />
 		</PersistGate>
 	  </Provider>
   );

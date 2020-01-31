@@ -18,9 +18,8 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return {
-		setDate : bindActionCreators(actionCreators.setDate,dispatch),
-		setMeal : bindActionCreators(actionCreators.setMeal,dispatch)
+	return{
+		
 	}
 }
 

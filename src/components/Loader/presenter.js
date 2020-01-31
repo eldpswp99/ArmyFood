@@ -4,7 +4,7 @@ import axios from "axios";
 
 class Loader extends Component{
 	
-	getData = async () => {
+	getData = () => {
 	
 		const DAY = 86400000;
 		
@@ -23,10 +23,10 @@ class Loader extends Component{
 		
 		
 		//데이터파싱필요
-		all.map(code => {
+		all.map(async (code) => {
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			const KEY = "#";
-			const { data : {DATA} } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE});
+			const { data : {DATA} } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}`);
 			addData(code,DATA);
 		})
 	
@@ -40,7 +40,7 @@ class Loader extends Component{
 	render(){
 		return(
 			<View style = {styles.container}>
-			 isLoading
+			 <Text>isLoading</Text>
 			</View>
 		)
 		

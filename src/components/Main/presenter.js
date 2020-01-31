@@ -1,33 +1,35 @@
 import React,{Component} from "react";
 import {View, Text,StyleSheet,StatusBar} from "react-native";
-import DatePicker from "../../components/DatePicker"
+import DatePicker from "../DatePicker"
 import { Header } from 'react-native-elements';
 import Loader from "../../components/Loader";
-import Setting from "../Setting";
-import SettingIcon from "../../components/SettingIcon";
+import SettingMain from "../SettingMain";
+import MealPicker from "../MealPicker";
+import SettingIcon from "../SettingIcon";
 
 class Main extends Component{
 	
 	render(){
-		
 		const {code,food,isLoading,year,month,day,meal} = this.props;
-		
+		/*
 		if(isLoading) return <Loader/>;
-		if(!code) return <Setting/>
+		if(!code) return <Setting/>*/
 		
-		return
-		(
-			<View>
+		return(
+			<View style = {styles.container}>
 				<Header
+					placement="left"
 					statusBarProps={{ barStyle: 'light-content' }}
-					leftComponent = {<DatePicker/>}
+					centerComponent = {{text : "군대 식단" , style : {color :"#fff", fontSize : 20}}}
 					rightComponent = {<SettingIcon/>}
 				/>
 				<View style = {styles.container}>
-				
+					<DatePicker />
+					<MealPicker />
+					<SettingMain />
 				</View>
 			</View>
-		)
+		);
 		
 	}
 }

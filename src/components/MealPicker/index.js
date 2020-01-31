@@ -1,19 +1,20 @@
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
-import SettingIcon from "./presenter";
+import MealPicker from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
+	const {meal} = state;
 	
 	return {
-	
+		meal
 	}
 }
 
 function mapDispatchToProps(dispatch){
 	return {
-		setShowSetting : bindActionCreators(actionCreators.setShowSetting,dispatch),
+		nextMeal : bindActionCreators(actionCreators.nextMeal,dispatch)
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SettingIcon);
+export default connect(mapStateToProps,mapDispatchToProps)(MealPicker);
