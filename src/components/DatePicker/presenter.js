@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {View, Text,Button,StyleSheet,TouchableOpacity} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {MONTH} from "../../Enums";
 
 class Loader extends Component{
 	constructor(props){
@@ -11,8 +12,7 @@ class Loader extends Component{
 	}
 	
 	pickDate(date){
-		const {year,month,day,setDate} = this.props;	
-		
+		const {year,month,day,setDate} = this.props;		
 	}
 	
 	render(){				
@@ -25,7 +25,10 @@ class Loader extends Component{
 					isVisible = {isDatePicker}
 					mode = "date"
 					onConfirm = {date => setDate(date.getFullYear(),date.getMonth()+1,date.getDate(),false)}
-					onCancel = {() => setShowDatePicker(false)} />
+					onCancel = {() => setShowDatePicker(false)} 
+					maximumDate={curDate.getTime() + MONTH}
+					minimumDate={curDate.getTime() - MONTH}
+					/>
 			</View>
 		)
 		

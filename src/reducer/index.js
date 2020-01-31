@@ -67,7 +67,7 @@ function setShowSetting(setShowSettingModal){
 //Reducer
 
 const initialState = {
-	all : [
+	allCode : [
 		"ATC",
 		"1691",
 		"2171",
@@ -80,7 +80,95 @@ const initialState = {
 		"7369",
 		"3333"
 	],
+	pos : [
+		"ATC",
+		"1691",
+		"2171",
+		"3389",
+		"5322",
+		"6282",
+		"6335",
+		"8902",
+		"9030",
+		"7369",
+		"3333"
+	],
+	allAllergic : [
+		{
+			num:1,
+			value:"난류",
+		},
+		{
+			num:2,
+			value:"우유",
+		},
+		{
+			num:3,
+			value:"메밀",
+		},
+		{
+			num:4,
+			value:"땅콩",
+		},
+		{
+			num:5,
+			value:"대두",
+		},
+		{
+			num:6,
+			value:"밀",
+		},
+		{
+			num:7,
+			value:"고등어",
+		},
+		{
+			num:8,
+			value:"게",
+		},
+		{
+			num:9,
+			value:"새우",
+		},
+		{
+			num:10,
+			value:"돼지고기",
+		},
+		{
+			num:11,
+			value:"복숭아",
+		},
+		{
+			num:12,
+			value:"토마토",
+		},
+		{
+			num:13,
+			value:"아황산염",
+		},
+		{
+			num:14,
+			value:"호두",
+		},
+		{
+			num:15,
+			value:"닭고기",
+		},
+		{
+			num:16,
+			value:"쇠고기",
+		},
+		{
+			num:17,
+			value:"오징어",
+		},
+		{
+			num:18,
+			value:"조개류",
+		},
+	],
 	code:undefined,
+	allergic:[],
 	food:[],
 	isLoading:true,
 	year:2020,

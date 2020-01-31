@@ -1,15 +1,14 @@
 import React,{Component} from "react";
 import {View, Text,StyleSheet,StatusBar} from "react-native";
 import axios from "axios";
+import {DAY} from "../../Enums";
 
 class Loader extends Component{
 	
 	getData = () => {
-	
-		const DAY = 86400000;
 		
 		let mealdate = new Date();
-		const {setDate,setMeal,all,addData,loadEnd} = this.props;
+		const {setDate,setMeal,allCode,addData,loadEnd} = this.props;
 			
 		const hour = mealdate.getHours();
 		let meal = "brst";
@@ -23,7 +22,7 @@ class Loader extends Component{
 		
 		
 		//데이터파싱필요
-		all.map(async (code) => {
+		allCode.map(async (code) => {
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			const KEY = "#";
 			const { data : {DATA} } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}`);

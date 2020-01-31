@@ -4,10 +4,10 @@ import Loader from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {all} = state;
+	const {allCode} = state;
 	
 	return {
-		all
+		allCode
 	}
 }
 
