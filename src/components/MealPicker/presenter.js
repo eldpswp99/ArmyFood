@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import {View, Text,StyleSheet,StatusBar,Button} from "react-native";
+import {View, Text,StyleSheet,TouchableOpacity,StatusBar,Button} from "react-native";
 import DatePicker from "../DatePicker"
 import { Header } from 'react-native-elements';
 import Loader from "../../components/Loader";
@@ -27,7 +27,11 @@ class MealPicker extends Component{
 		
 		return(
 			<View>
-				<Button title = {`${mealVal}`} onPress = {() => nextMeal(meal)}/>
+				<TouchableOpacity onPress = {() => nextMeal(meal)}>
+					<Text>
+						{`${mealVal}`}
+					</Text>
+				</TouchableOpacity>
 			</View>
 		);
 		

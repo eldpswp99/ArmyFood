@@ -4,17 +4,20 @@ import SettingAllergic from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {isSettingAllergic} = state;
+	const {isSettingAllergic,allAllergic,posAllergic} = state;
 	
 	return {
-		isSettingAllergic
+		isSettingAllergic,
+		allAllergic,
+		posAllergic
 	}
 }
 
 function mapDispatchToProps(dispatch){
 	return {
-		setShowSetting : bindActionCreators(actionCreators.setShowSetting,dispatch),
-		setAllergic : bindActionCreators(actionCreators.setAllergic,dispatch)
+		cancelAllergic : bindActionCreators(actionCreators.cancelAllergic,dispatch),
+		toggleAllergic : bindActionCreators(actionCreators.toggleAllergic,dispatch),
+		submitAllergic : bindActionCreators(actionCreators.submitAllergic,dispatch),
 	}
 }
 

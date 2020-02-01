@@ -9,6 +9,9 @@ const SET_DATE = "SET_DATE";
 const NEXT_MEAL = "NEXT_MEAL";
 const SET_SHOW_DATEPICKER = "SET_SHOW_DATEPICKER";
 const SET_SHOW_SETTING = "SET_SHOW_SETTING";
+const TOGGLE_ALLERGIC = "TOGGLE_ALLERGIC";
+const SUBMIT_ALLERGIC = "SUBMIT_ALLERGIC";
+const CANCEL_ALLERGIC = "CANCEL_ALLERGIC";
 
 //Action Creators
 
@@ -61,6 +64,25 @@ function setShowSetting(setShowSettingModal){
 	return{
 		type:SET_SHOW_SETTING,
 		setShowSettingModal
+	}
+}
+
+function toggleAllergic(num){
+	return{
+		type:TOGGLE_ALLERGIC,
+		num,
+	}
+}
+
+function submitAllergic(){
+	return{
+		type:SUBMIT_ALLERGIC,
+	}
+}
+
+function cancelAllergic(){
+	return{
+		type:CANCEL_ALLERGIC,
 	}
 }
 
@@ -167,6 +189,8 @@ const initialState = {
 			value:"조개류",
 		},
 	],
+	isAllergic:Array.from(new Array(Enums.ALLERGIC+1),()=>false),
+	posAllergic:Array.from(new Array(Enums.ALLERGIC+1),()=>false),
 	code:undefined,
 	allergic:[],
 	food:[],
@@ -198,6 +222,12 @@ function reducer(state = initialState,action){
 			return applySetShowDatePicker(state,action.isDatePicker);
 		case SET_SHOW_SETTING:
 			return applySetShowSetting(state,action.setShowSettingModal);
+		case TOGGLE_ALLERGIC:
+			return applyToggleAllergic(state,action.num);
+		case SUBMIT_ALLERGIC:
+			return applySubmitAllergic(state);
+		case CANCEL_ALLERGIC:
+			return applyCancelAllergic(state);
 		default :
 			return state;
 	}
@@ -297,6 +327,32 @@ function applySetShowSetting(state,setShowSettingModal){
 	}
 }
 
+function applyToggleAllergic(state,num){
+	let newIsAllergic = state.posAllergic.slice();
+	newIsAllergic[num] = !state.posAllergic[num];
+	
+	return{
+		...state,
+		posAllergic : newIsAllergic
+	}
+}
+
+function applySubmitAllergic(state){	
+	return{
+		...state,
+		isAllergic:[...state.posAllergic],
+		isSettingAllergic:false
+	}
+}
+
+function applyCancelAllergic(state){
+	return{
+		...state,
+		posAllergic:[...state.isAllergic],
+		isSettingAllergic:false
+	}
+}
+
 //Export Action Creators
 
 const actionCreators = {
@@ -306,7 +362,10 @@ const actionCreators = {
 	setDate,
 	nextMeal,
 	setShowDatePicker,
-	setShowSetting
+	setShowSetting,
+	toggleAllergic,
+	submitAllergic,
+	cancelAllergic
 };
 
 export {actionCreators};

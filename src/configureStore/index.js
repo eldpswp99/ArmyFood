@@ -6,7 +6,7 @@ import { createStore } from 'redux'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist : ['code']
+  whitelist : ['code',"isAllergic"]
 };
 
 const enhancedReducer = persistReducer(persistConfig, reducer);

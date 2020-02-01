@@ -6,6 +6,7 @@ import Loader from "../../components/Loader";
 import SettingMain from "../SettingMain";
 import MealPicker from "../MealPicker";
 import SettingIcon from "../SettingIcon";
+import SettingAllergic from "../SettingAllergic";
 
 class Main extends Component{
 	
@@ -24,9 +25,12 @@ class Main extends Component{
 					rightComponent = {<SettingIcon/>}
 				/>
 				<View style = {styles.container}>
-					<DatePicker />
-					<MealPicker />
+					<View style = {styles.pickerContainer}>
+						<DatePicker />
+						<MealPicker />
+					</View>
 					<SettingMain />
+					<SettingAllergic />
 				</View>
 			</View>
 		);
@@ -37,8 +41,11 @@ class Main extends Component{
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-		alignItems:"center",
-		justifyContent:"center"
+		
+	},
+	pickerContainer:{
+		flex:1,
+		flexDirection:"row"
 	}
 })
 

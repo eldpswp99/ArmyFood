@@ -20,7 +20,9 @@ class Loader extends Component{
 		const curDate = new Date(year,month,day);
 		return(
 			<View style = {styles.container}>
-				<Button title = {`${year}년 ${month}월 ${day}일`} onPress = {() => setShowDatePicker(true)}/>
+				<TouchableOpacity onPress = {() => setShowDatePicker(true)} >
+					<Text>{`${year}년 ${month}월 ${day}일`}</Text>
+				</TouchableOpacity>
 				<DateTimePickerModal
 					isVisible = {isDatePicker}
 					mode = "date"
@@ -38,8 +40,7 @@ class Loader extends Component{
 const styles = StyleSheet.create({
 	container :{
 		flex:1,
-		alignItems:"center",
-		justifyContent:"center"
+		
 	},
 	text : {
 		color:"black",
