@@ -3,14 +3,14 @@ import {Modal, View, Text,StyleSheet,TouchableOpacity,Button} from "react-native
 import * as Enums from "../../Enums";
 
 
-class SettingMain extends Component{
+class SettingCodeByTable extends Component{
 	
 	render(){
-		const {isSettingMain,setShowSetting} = this.props;
+		const {isSettingCode,setShowSetting} = this.props;
 		
 		return(
 			<Modal
-				visible = {isSettingMain}
+				visible = {isSettingCode}
 			>
 				<TouchableOpacity onPress = {() => setShowSetting(Enums.SHOW_SET_CODE)}>
 					<Text>식단코드 재설정</Text>
@@ -30,4 +30,4 @@ class SettingMain extends Component{
 	}
 }
 
-export default SettingMain;
+export default SettingCodeByTable;

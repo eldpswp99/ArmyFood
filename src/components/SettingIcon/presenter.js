@@ -9,7 +9,7 @@ class SettingIcon extends Component{
 		const {setShowSetting} = this.props;
 		
 		return(
-			<TouchableOpacity onPress = {() => setShowSetting(Enums.SHOW_SET_MAIN)}>
+			<TouchableOpacity onPress = {() => setShowSetting(true)}>
 				<Ionicons name="md-settings" size={27} color="#fff" />
 			</TouchableOpacity>
 		)

@@ -1,7 +1,8 @@
 import { persistStore, persistReducer } from 'redux-persist';
 import { AsyncStorage } from 'react-native';  
 import reducer from "../reducer";
-import { createStore } from 'redux'
+import {createStore, applyMiddleware} from 'redux';
+import multi from 'redux-multi';
 
 const persistConfig = {
   key: 'root',
@@ -12,7 +13,8 @@ const persistConfig = {
 const enhancedReducer = persistReducer(persistConfig, reducer);
 
 function configureStore() {
-  const store = createStore(enhancedReducer);
+  const store = createStore(enhancedReducer,applyMiddleware(multi));
+	
   const persistor = persistStore(store);
   return { store, persistor };
 };

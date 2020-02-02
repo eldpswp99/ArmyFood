@@ -3,8 +3,6 @@ import {View, Text,StyleSheet,TouchableOpacity,StatusBar,Button} from "react-nat
 import DatePicker from "../DatePicker"
 import { Header } from 'react-native-elements';
 import Loader from "../../components/Loader";
-import SettingMain from "../SettingMain";
-import SettingIcon from "../SettingIcon";
 
 class MealPicker extends Component{
 	

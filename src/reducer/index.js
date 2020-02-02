@@ -1,5 +1,6 @@
 //Import
 import * as Enums from "../Enums";
+import { NavigationActions } from 'react-navigation';
 //Actions
 
 const SET_CODE = "SET_CODE";
@@ -12,6 +13,9 @@ const SET_SHOW_SETTING = "SET_SHOW_SETTING";
 const TOGGLE_ALLERGIC = "TOGGLE_ALLERGIC";
 const SUBMIT_ALLERGIC = "SUBMIT_ALLERGIC";
 const CANCEL_ALLERGIC = "CANCEL_ALLERGIC";
+const NAVIGATE_MAIN = "NAVIGATE_MAIN";
+const NAVIGATE_SETTING_ALLERGIC = "NAVIGATE_SETTING_ALLERGIC";
+const NAVIGATE_SETTING_CODEBYTABLE = "NAVIGATE_SETTING_CODEBYTABLE";
 
 //Action Creators
 
@@ -60,10 +64,10 @@ function setShowDatePicker(isDatePicker){
 	}
 }
 
-function setShowSetting(setShowSettingModal){
+function setShowSetting(isSettingMain){
 	return{
 		type:SET_SHOW_SETTING,
-		setShowSettingModal
+		isSettingMain
 	}
 }
 
@@ -85,6 +89,8 @@ function cancelAllergic(){
 		type:CANCEL_ALLERGIC,
 	}
 }
+
+
 
 //Reducer
 
@@ -201,9 +207,6 @@ const initialState = {
 	meal:"brst",
 	isDatePicker:false,
 	isSettingMain:false,
-	isSettingCode:false,
-	isSettingAllergic:false,
-	isWhoDev:false
 }
 
 function reducer(state = initialState,action){
@@ -221,7 +224,7 @@ function reducer(state = initialState,action){
 		case SET_SHOW_DATEPICKER:
 			return applySetShowDatePicker(state,action.isDatePicker);
 		case SET_SHOW_SETTING:
-			return applySetShowSetting(state,action.setShowSettingModal);
+			return applySetShowSetting(state,action.isSettingMain);
 		case TOGGLE_ALLERGIC:
 			return applyToggleAllergic(state,action.num);
 		case SUBMIT_ALLERGIC:
@@ -297,33 +300,11 @@ function applySetShowDatePicker(state,isDatePicker){
 	}
 }
 
-function applySetShowSetting(state,setShowSettingModal){
-	let isSettingMain,isSettingCode,isSettingAllergic,isWhoDev;
-	isSettingMain = isSettingCode = isSettingAllergic = isWhoDev = false;
-	
-	switch(setShowSettingModal){
-		case Enums.SHOW_SET_NONE:
-			break;
-		case Enums.SHOW_SET_MAIN:
-			isSettingMain = true;
-			break;
-		case Enums.SHOW_SET_CODE:
-			isSettingCode = true;
-			break;
-		case Enums.SHOW_SET_ALLERGIC:
-			isSettingAllergic = true;
-			break;
-		case Enums.SHOW_WHO_DEV:
-			isWhoDev = true;
-			break;
-	}
+function applySetShowSetting(state,isSettingMain){
 	
 	return{
 		...state,
 		isSettingMain,
-		isSettingCode,
-		isSettingAllergic,
-		isWhoDev
 	}
 }
 

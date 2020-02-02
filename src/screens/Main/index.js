@@ -1,20 +1,27 @@
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
-import SettingMain from "./presenter";
+import Main from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {isSettingMain} = state;
+	const {isSettingMain,code,food,isLoading,year,month,day,meal} = state;
 	
 	return {
+		code,
+		food,
+		isLoading,
+		year,
+		month,
+		day,
+		meal,
 		isSettingMain
 	}
 }
 
 function mapDispatchToProps(dispatch){
-	return {
+	return{
 		setShowSetting : bindActionCreators(actionCreators.setShowSetting,dispatch)
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SettingMain);
+export default connect(mapStateToProps,mapDispatchToProps)(Main);
