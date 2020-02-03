@@ -4,7 +4,7 @@ import Main from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {isSettingMain,code,food,isLoading,year,month,day,meal} = state;
+	const {isSettingMain,code,food,isLoading,year,month,day,meal,isAllergic} = state;
 	
 	return {
 		code,
@@ -14,7 +14,8 @@ function mapStateToProps(state){
 		month,
 		day,
 		meal,
-		isSettingMain
+		isSettingMain,
+		isAllergic
 	}
 }
 

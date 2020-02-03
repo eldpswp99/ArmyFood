@@ -7,9 +7,7 @@ import AppStack from './src/screens';
 
 const { store, persistor } = configureStore();
 
-export default function App() {
-	console.log(AppStack);
-	
+export default function App() {	
 	return (
 	  <Provider store={store}>
 		<PersistGate loading={null} persistor={persistor}>

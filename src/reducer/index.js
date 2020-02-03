@@ -1,21 +1,18 @@
 //Import
 import * as Enums from "../Enums";
-import { NavigationActions } from 'react-navigation';
 //Actions
 
 const SET_CODE = "SET_CODE";
 const ADD_DATA = "ADD_DATA";
 const LOAD_END = "LOAD_END";
 const SET_DATE = "SET_DATE";
+const SET_MEAL = "SET_MEAL";
 const NEXT_MEAL = "NEXT_MEAL";
 const SET_SHOW_DATEPICKER = "SET_SHOW_DATEPICKER";
 const SET_SHOW_SETTING = "SET_SHOW_SETTING";
 const TOGGLE_ALLERGIC = "TOGGLE_ALLERGIC";
 const SUBMIT_ALLERGIC = "SUBMIT_ALLERGIC";
 const CANCEL_ALLERGIC = "CANCEL_ALLERGIC";
-const NAVIGATE_MAIN = "NAVIGATE_MAIN";
-const NAVIGATE_SETTING_ALLERGIC = "NAVIGATE_SETTING_ALLERGIC";
-const NAVIGATE_SETTING_CODEBYTABLE = "NAVIGATE_SETTING_CODEBYTABLE";
 
 //Action Creators
 
@@ -47,6 +44,13 @@ function setDate(year,month,day,isDatePicker){
 		month,
 		day,
 		isDatePicker
+	}
+}
+
+function setMeal(meal){
+	return{
+		type:SET_MEAL,
+		meal
 	}
 }
 
@@ -197,7 +201,7 @@ const initialState = {
 	],
 	isAllergic:Array.from(new Array(Enums.ALLERGIC+1),()=>false),
 	posAllergic:Array.from(new Array(Enums.ALLERGIC+1),()=>false),
-	code:undefined,
+	code:"1691",
 	allergic:[],
 	food:[],
 	isLoading:true,
@@ -219,6 +223,8 @@ function reducer(state = initialState,action){
 			return applyLoadEnd(state);
 		case SET_DATE:
 			return applySetDate(state,action.year,action.month,action.day,action.isDatePicker);
+		case SET_MEAL:
+			return applySetMeal(state,action.meal);
 		case NEXT_MEAL:
 			return applyNextMeal(state,action.meal);
 		case SET_SHOW_DATEPICKER:
@@ -245,13 +251,10 @@ function applySetCode(state,code){
 	}
 }
 
-function applyAddData(state,code,data){
+function applyAddData(state,data){
 	return{
 		...state,
-		food:state.food.concat({
-			foodCode:code,
-			foodData:data
-		})
+		food:state.food.concat(data)
 	}
 }
 
@@ -269,6 +272,13 @@ function applySetDate(state,year,month,day,isDatePicker){
 		month,
 		day,
 		isDatePicker
+	}
+}
+
+function applySetMeal(state,meal){
+	return{
+		...state,
+		meal
 	}
 }
 
@@ -341,6 +351,7 @@ const actionCreators = {
 	addData,
 	loadEnd,
 	setDate,
+	setMeal,
 	nextMeal,
 	setShowDatePicker,
 	setShowSetting,

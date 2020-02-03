@@ -24,9 +24,9 @@ class MealPicker extends Component{
 		}
 		
 		return(
-			<View>
+			<View style = {styles.container}>
 				<TouchableOpacity onPress = {() => nextMeal(meal)}>
-					<Text>
+					<Text style = {styles.text}>
 						{`${mealVal}`}
 					</Text>
 				</TouchableOpacity>
@@ -37,11 +37,23 @@ class MealPicker extends Component{
 }
 
 const styles = StyleSheet.create({
-	container:{
+	container :{
 		flex:1,
-		alignItems:"center",
-		justifyContent:"center"
-	}
+		marginTop:10,
+		marginLeft:15,
+		alignItems:"center"
+	},
+	text : {
+		color:"black",
+		fontSize:25,
+		borderWidth:2,
+		padding:5,
+		borderRadius:10,
+	},
+	datePicker:{
+		flex:2,
+		
+	},
 })
 
 export default MealPicker;

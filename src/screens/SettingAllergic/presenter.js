@@ -19,13 +19,13 @@ class SettingAllergic extends Component{
 		
 		const tableRow = Array.from(new Array(6),(x,index) => index*3);
 		return(
-			<View>
+			<View style = {styles.container}>
 				<Header
 					statusBarProps={{ barStyle: 'light-content' }}
 					leftComponent = {
 					<TouchableOpacity onPress = {() => cancelAllergic()}>
 						<EvilIcons name="close" size={32} color="#fff" />
-						</TouchableOpacity>
+					</TouchableOpacity>
 				}
 					centerComponent = {{text : "알레르기 설정" , style : {color :"#fff", fontSize : 20}}}
 				/>

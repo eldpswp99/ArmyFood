@@ -8,7 +8,7 @@ class Loader extends Component{
 	getData = () => {
 		
 		let mealdate = new Date();
-		const {setDate,setMeal,allCode,addData,loadEnd} = this.props;
+		const {setDate,setMeal,allCode,addData,loadEnd,food} = this.props;
 			
 		const hour = mealdate.getHours();
 		let meal = "brst";
@@ -22,11 +22,54 @@ class Loader extends Component{
 		
 		
 		//데이터파싱필요
+		/*
+			{
+				code,
+				foodData:[
+					{
+						date:"20201212"
+						brst:[array of String]
+						lunc:[array of String]
+						dinr:[array of String]
+					}
+				]
+			}
+		*/
 		allCode.map(async (code) => {
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
-			const KEY = "#";
-			const { data : {DATA} } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}`);
-			addData(code,DATA);
+			const KEY = "3836313632323338303130303632303637";
+			const {data } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/100`);
+			let curDate = "";
+			let tempbrst = [];
+			let templunc = [];
+			let tempdinr = [];
+			let codeFoodTable = [];
+			data[`${SERVICE}`].row.map(elem => {
+				if(elem["dates"] !== ""){
+					if(curDate !== ""){
+						codeFoodTable = codeFoodTable.concat({
+							date:curDate,
+							brst:tempbrst,
+							lunc:templunc,
+							dinr:tempdinr
+						})
+					}
+					
+					curDate = elem["dates"];
+					tempbrst = tempdinr = templunc = [];
+				} 
+				
+				if(curDate === "") return null;			
+				
+				if(elem["brst"] !== "") tempbrst = tempbrst.concat(elem["brst"]);
+				if(elem["lunc"] !== "") templunc = templunc.concat(elem["lunc"]);
+				if(elem["dinr"] !== "") tempdinr = tempdinr.concat(elem["dinr"]);
+			})
+			
+			addData({
+				code,
+				foodData:codeFoodTable
+			});
 		})
 	
 		loadEnd();

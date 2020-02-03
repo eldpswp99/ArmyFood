@@ -21,7 +21,7 @@ class Loader extends Component{
 		return(
 			<View style = {styles.container}>
 				<TouchableOpacity onPress = {() => setShowDatePicker(true)} >
-					<Text>{`${year}년 ${month}월 ${day}일`}</Text>
+					<Text style = {styles.text}>{`${year}년 ${month}월 ${day}일`}</Text>
 				</TouchableOpacity>
 				<DateTimePickerModal
 					isVisible = {isDatePicker}
@@ -39,13 +39,22 @@ class Loader extends Component{
 
 const styles = StyleSheet.create({
 	container :{
-		flex:1,
-		
+		flex:2,
+		marginTop:10,
+		marginLeft:15,
+		alignItems:"center"
 	},
 	text : {
 		color:"black",
-		fontSize:25
-	}
+		fontSize:25,
+		borderWidth:2,
+		padding:5,
+		borderRadius:10
+	},
+	datePicker:{
+		flex:2,
+		
+	},
 })
 
 export default Loader;

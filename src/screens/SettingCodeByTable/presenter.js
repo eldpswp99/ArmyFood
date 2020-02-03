@@ -9,25 +9,22 @@ class SettingCodeByTable extends Component{
 		const {isSettingCode,setShowSetting} = this.props;
 		
 		return(
-			<Modal
-				visible = {isSettingCode}
-			>
-				<TouchableOpacity onPress = {() => setShowSetting(Enums.SHOW_SET_CODE)}>
-					<Text>식단코드 재설정</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress = {() => setShowSetting(Enums.SHOW_SET_ALLERGIC)}>
-					<Text>알레르기 재설정</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress = {() => setShowSetting(Enums.SHOW_WHO_DEV)}>
-					<Text>만든 사람</Text>
-				</TouchableOpacity>
-				<View>
-					<Button title = "닫기" onPress = {() => setShowSetting(Enums.SHOW_SET_NONE)} />
-				</View>
-			</Modal>
+			<View styles = {styles.container}>
+				<Text>SettingCodeByTable</Text>
+			</View>
 		)
 		
 	}
 }
+
+const styles = StyleSheet.create({
+	container:{
+		flex:1,
+		justifyContent:"center",
+		backgroundColor:"#b0b0b0",
+		margin:0
+	},
+})
+
 
 export default SettingCodeByTable;
