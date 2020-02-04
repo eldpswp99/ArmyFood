@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 		flex:1,
 		marginTop:10,
 		marginLeft:15,
-		alignItems:"center"
+		alignItems:"flex-start"
 	},
 	text : {
 		color:"black",

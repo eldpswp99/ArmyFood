@@ -21,7 +21,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
 	return{
-		setShowSetting : bindActionCreators(actionCreators.setShowSetting,dispatch)
+		setShowSetting : bindActionCreators(actionCreators.setShowSetting,dispatch),
 	}
 }
 

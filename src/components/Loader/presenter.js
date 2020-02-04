@@ -38,7 +38,7 @@ class Loader extends Component{
 		allCode.map(async (code) => {
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			const KEY = "3836313632323338303130303632303637";
-			const {data } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/100`);
+			const {data } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/500`);
 			let curDate = "";
 			let tempbrst = [];
 			let templunc = [];

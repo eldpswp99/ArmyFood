@@ -1,13 +1,13 @@
 import React,{Component} from "react";
-import {View, Text,StyleSheet,StatusBar,TouchableOpacity} from "react-native";
+
+import { Container, Header, Content,Title, Text ,Left,Right,Body} from 'native-base';
+import {View,Platform,StyleSheet,StatusBar} from "react-native";
+
 import DatePicker from "../../components/DatePicker"
-import { Header } from 'react-native-elements';
 import Loader from "../../components/Loader";
 import MealPicker from "../../components/MealPicker";
 import SettingIcon from "../../components/SettingIcon";
 import Modal from "react-native-modal";
-
-
 
 class Main extends Component{
 	
@@ -28,65 +28,54 @@ class Main extends Component{
 			isAllergic,
 			setShowSetting
 		} = this.props;
-		const foodTable = food.find(elem => {
+		/*const foodTable = food.find(elem => {
 			console.log(elem["code"] == code);
 			return elem["code"] == code;
-		});
-		const TodayFoodTable = foodTable["foodData"].find(elem => {
+		});*/
+		/*const TodayFoodTable = foodTable["foodData"].find(elem => {
 			return elem["date"] == `${year}${this.addZero(month)}${this.addZero(day)}`
 		})
-		console.log(TodayFoodTable);
-		if(isLoading) return <Loader/>;
+		console.log(TodayFoodTable);*/
+		//if(isLoading) return <Loader/>;
 /*		if(!code) return <Setting/>*/
 		
 		return(
-			<View style = {styles.container}>
-				
-				<Header
-					placement="left"
-					statusBarProps={{ barStyle: 'light-content' }}
-					centerComponent = {{text : "군대 식단" , style : {color :"#fff", fontSize : 20}}}
-					rightComponent = {<SettingIcon/>}
-				/>
-	
-				<View style = {styles.container}>
-					<View style = {styles.pickerContainer}>
+				<Container>
+					<Header
+						iosBarStyle = {"light-content"}
+						>
+						<Left></Left>
+						<Body>
+							<Title>군대 식단</Title>	
+						</Body>
+						<Right>
+							<SettingIcon />
+						</Right>
+					</Header>
+					<Content>
 						<DatePicker />
 						<MealPicker />
-					</View>
-					<View style ={styles.foodTable}>
-						{
-							//TodayFoodTable[meal].map(elem => (<Text>{elem.slice(0,elem.indexOf(" "))}</Text>))
-						}
-					</View>		
-				</View>
-				
-			</View>
+							{
+								//TodayFoodTable[meal].map(elem => (<Text>{elem.slice(0,elem.indexOf(" "))}</Text>))
+							}
+					</Content>	
+				</Container>
 		);
 		
 	}
 }
 
 const styles = StyleSheet.create({
-	container:{
-		flex:1,
-		
-	},
-	headerText:{
-		fontSize:20,
-		color:"white",
-	},
-	pickerContainer:{
-		flex:1,
-		flexDirection:"row"
-	},
-	
-	mealPicker:{
-		flex:1,
-		fontSize:15
-	}
-})
+    container: {
+				flex: 1,
+				...Platform.select({
+						android: {
+								marginTop: StatusBar.currentHeight
+						}
+				})
 
+		}
+})
 /*<Modal
 					isVisible = {isSettingMain}
 				>
