@@ -8,7 +8,7 @@ class Loader extends Component{
 	getData = () => {
 		
 		let mealdate = new Date();
-		const {setDate,setMeal,allCode,addData,loadEnd,food} = this.props;
+		const {setFixDate,setDate,setMeal,allCode,addData,loadEnd,food} = this.props;
 			
 		const hour = mealdate.getHours();
 		let meal = "brst";
@@ -19,7 +19,7 @@ class Loader extends Component{
 		}
 		
 		setDate(mealdate.getFullYear(),mealdate.getMonth()+1,mealdate.getDate(),false);
-		
+		setFixDate(mealdate.getFullYear(),mealdate.getMonth()+1,mealdate.getDate());		
 		
 		//데이터파싱필요
 		/*

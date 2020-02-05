@@ -3,6 +3,7 @@ import {Text} from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack'
 
+
 import Main from "./Main";
 import SettingAllergic from "./SettingAllergic";
 import SettingCodeByTable from "./SettingCodeByTable";

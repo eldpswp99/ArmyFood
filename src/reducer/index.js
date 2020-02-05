@@ -6,6 +6,7 @@ const SET_CODE = "SET_CODE";
 const ADD_DATA = "ADD_DATA";
 const LOAD_END = "LOAD_END";
 const SET_DATE = "SET_DATE";
+const SET_FIX_DATE = "SET_FIX_DATE";
 const SET_MEAL = "SET_MEAL";
 const NEXT_MEAL = "NEXT_MEAL";
 const SET_SHOW_DATEPICKER = "SET_SHOW_DATEPICKER";
@@ -34,6 +35,15 @@ function addData(code,data){
 function loadEnd(){
 	return{
 		type:LOAD_END
+	}
+}
+
+function setFixDate(year,month,day){
+	return{
+		type:SET_FIX_DATE,
+		year,
+		month,
+		day
 	}
 }
 
@@ -208,6 +218,9 @@ const initialState = {
 	year:2020,
 	month:1,
 	day:29,
+	fixYear:2020,
+	fixMonth:2,
+	fixDay:5,
 	meal:"brst",
 	isDatePicker:false,
 	isSettingMain:false,
@@ -223,6 +236,8 @@ function reducer(state = initialState,action){
 			return applyLoadEnd(state);
 		case SET_DATE:
 			return applySetDate(state,action.year,action.month,action.day,action.isDatePicker);
+		case SET_FIX_DATE:
+			return applySetFixDate(state,action.year,action.month,action.day);
 		case SET_MEAL:
 			return applySetMeal(state,action.meal);
 		case NEXT_MEAL:
@@ -272,6 +287,15 @@ function applySetDate(state,year,month,day,isDatePicker){
 		month,
 		day,
 		isDatePicker
+	}
+}
+
+function applySetFixDate(state,year,month,day){
+	return{
+		...state,
+		year,
+		month,
+		day,
 	}
 }
 
@@ -351,13 +375,14 @@ const actionCreators = {
 	addData,
 	loadEnd,
 	setDate,
+	setFixDate,
 	setMeal,
 	nextMeal,
 	setShowDatePicker,
 	setShowSetting,
 	toggleAllergic,
 	submitAllergic,
-	cancelAllergic
+	cancelAllergic,
 };
 
 export {actionCreators};

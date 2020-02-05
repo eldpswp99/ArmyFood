@@ -1,16 +1,14 @@
 import React,{Component} from "react";
 
-import { Container, Header, Content,Title, Text ,Left,Right,Body} from 'native-base';
+import { Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
 import {View,Platform,StyleSheet,StatusBar} from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import DatePicker from "../../components/DatePicker"
+import {MONTH} from "../../Enums";
 import Loader from "../../components/Loader";
-import MealPicker from "../../components/MealPicker";
-import SettingIcon from "../../components/SettingIcon";
 import Modal from "react-native-modal";
 
-class Main extends Component{
-	
+class Main extends Component{	
 	addZero(elem){
 		return elem < 10 ? "0"+elem : elem;
 	}
@@ -20,14 +18,41 @@ class Main extends Component{
 			code,
 			food,
 			isLoading,
+			setDate,
+			setShowDatePicker,
+			isDatePicker,
 			year,
 			month,
 			day,
 			meal,
 			isSettingMain,
 			isAllergic,
-			setShowSetting
+			setShowSetting,
+			nextMeal,
+			fixYear,
+			fixMonth,
+			fixDay
 		} = this.props;
+		
+		
+		let mealVal;
+		const curDate = new Date(year,month-1,day);
+		const fixDate = new Date(fixYear,fixMonth-1,fixDay);
+		
+		switch(meal){
+			case "brst":
+				mealVal="아침";
+				break;
+			case "lunc":
+				mealVal="점심";
+				break;
+			case "dinr":
+				mealVal="저녁";
+				break;
+		}
+		
+		//sort후 day차례대로
+		
 		/*const foodTable = food.find(elem => {
 			console.log(elem["code"] == code);
 			return elem["code"] == code;
@@ -39,25 +64,52 @@ class Main extends Component{
 		//if(isLoading) return <Loader/>;
 /*		if(!code) return <Setting/>*/
 		
+		const tempData = ["밥","배춧국 (5)(6)","애호박나물 (9)","쇠고기감자간장조림 (5)(6)(16)","깍두기"];
+		
 		return(
 				<Container>
 					<Header
 						iosBarStyle = {"light-content"}
 						>
-						<Left></Left>
+						<Left>
+							<Button transparent>
+								 <Icon name='md-menu' style = {{fontSize : 27}}/>
+							</Button>
+						</Left>
 						<Body>
-							<Title>군대 식단</Title>	
+							<Title>식단코드 : {`${code}`}</Title>	
 						</Body>
 						<Right>
-							<SettingIcon />
+							<Button transparent onPress = {() => setShowDatePicker(true)}>
+								 <Icon name='ios-calendar' style = {{fontSize : 27}}/>
+							</Button>
 						</Right>
 					</Header>
-					<Content>
-						<DatePicker />
-						<MealPicker />
-							{
-								//TodayFoodTable[meal].map(elem => (<Text>{elem.slice(0,elem.indexOf(" "))}</Text>))
-							}
+				
+					<Content> 
+						<Card>
+							<CardItem header>
+								<Body>
+										<Text>{`${year}년 ${month}월 ${day}일 - ${mealVal}`}</Text>									
+								</Body>
+							</CardItem>
+							{tempData.map(elem => (
+								<CardItem key = {elem}>
+									<Body>
+										<Text>{elem}</Text>
+									</Body>
+								</CardItem>
+							))}
+						</Card>
+						
+							<DateTimePickerModal
+								isVisible = {isDatePicker}
+								mode = "date"
+								onConfirm = {date => setDate(date.getFullYear(),date.getMonth()+1,date.getDate(),false)}
+								onCancel = {() => setShowDatePicker(false)} 
+								maximumDate={fixDate.getTime() + MONTH}
+								minimumDate={fixDate.getTime() - MONTH}
+							/>
 					</Content>	
 				</Container>
 		);
@@ -65,17 +117,6 @@ class Main extends Component{
 	}
 }
 
-const styles = StyleSheet.create({
-    container: {
-				flex: 1,
-				...Platform.select({
-						android: {
-								marginTop: StatusBar.currentHeight
-						}
-				})
-
-		}
-})
 /*<Modal
 					isVisible = {isSettingMain}
 				>
@@ -94,5 +135,9 @@ const styles = StyleSheet.create({
 						</TouchableOpacity>
 					</View>
 				</Modal>	*/
+
+{
+								//TodayFoodTable[meal].map(elem => (<Text>{elem.slice(0,elem.indexOf(" "))}</Text>))
+							}
 
 export default Main;
