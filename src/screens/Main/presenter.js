@@ -8,10 +8,19 @@ import {MONTH} from "../../Enums";
 import Loader from "../../components/Loader";
 import Modal from "react-native-modal";
 
+import { NavigationContainer,useFocusEffect } from '@react-navigation/native';
+import SettingAllergic from "../SettingAllergic";
+import SettingCodeByTable from "../SettingCodeByTable";
+import SettingCodeByCode from "../SettingCodeByCode";
+import SettingShowMeal from "../SettingShowMeal";
+
+
 class Main extends Component{	
 	addZero(elem){
 		return elem < 10 ? "0"+elem : elem;
 	}
+	
+	function 
 	
 	render(){
 		const {
@@ -66,13 +75,14 @@ class Main extends Component{
 		
 		const tempData = ["밥","배춧국 (5)(6)","애호박나물 (9)","쇠고기감자간장조림 (5)(6)(16)","깍두기"];
 		
+	const {navigation} = this.props;
 		return(
 				<Container>
 					<Header
 						iosBarStyle = {"light-content"}
 						>
 						<Left>
-							<Button transparent>
+							<Button transparent onPress = {() => navigation.openDrawer()}>
 								 <Icon name='md-menu' style = {{fontSize : 27}}/>
 							</Button>
 						</Left>
@@ -84,8 +94,7 @@ class Main extends Component{
 								 <Icon name='ios-calendar' style = {{fontSize : 27}}/>
 							</Button>
 						</Right>
-					</Header>
-				
+					</Header>				
 					<Content> 
 						<Card>
 							<CardItem header>
@@ -111,9 +120,11 @@ class Main extends Component{
 								minimumDate={fixDate.getTime() - MONTH}
 							/>
 					</Content>	
+				
+					
+				
 				</Container>
 		);
-		
 	}
 }
 

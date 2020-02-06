@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
-import SettingShowMeal from "./presenter";
+import SettingCodeByTable from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
@@ -18,4 +18,4 @@ function mapDispatchToProps(dispatch){
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SettingShowMeal);
+export default connect(mapStateToProps,mapDispatchToProps)(SettingCodeByTable);

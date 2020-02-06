@@ -1,9 +1,8 @@
 import React,{Component} from "react";
-import {Modal, View, Text,StyleSheet,TouchableOpacity,Button} from "react-native";
-import { Header } from 'react-native-elements';
+import { Container,Icon, Button,Header,List,ListItem, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
+import {View,Platform,StyleSheet,StatusBar} from "react-native";
 import * as Enums from "../../Enums";
 import { CheckBox } from 'react-native-elements';
-import { EvilIcons } from '@expo/vector-icons';
 
 
 class SettingAllergic extends Component{
@@ -18,102 +17,62 @@ class SettingAllergic extends Component{
 			} = this.props;
 		
 		const tableRow = Array.from(new Array(6),(x,index) => index*3);
+		const {navigation} = this.props;
 		return(
-			<View style = {styles.container}>
-				<Header
-					statusBarProps={{ barStyle: 'light-content' }}
-					leftComponent = {
-					<TouchableOpacity onPress = {() => cancelAllergic()}>
-						<EvilIcons name="close" size={32} color="#fff" />
-					</TouchableOpacity>
-				}
-					centerComponent = {{text : "알레르기 설정" , style : {color :"#fff", fontSize : 20}}}
-				/>
-				<View style = {styles.title}>
-					<Text style = {styles.titleText}>
-						체크된 항목에 해당하는 메뉴는 <Text>주황색</Text>으로 표시됩니다.
+			<Container>
+				<Header>
+					<Left>
+						<Button transparent onPress = {() => 
+					{
+						cancelAllergic();
+						navigation.goBack()}}>
+							<Icon name = "ios-arrow-back" style = {{fontSize:27}} />
+						</Button>
+					</Left>
+					<Body>
+						<Title>알레르기 설정</Title>
+					</Body>
+				</Header>
+				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
+					<Text style = {{padding:20 ,fontSize:20,lineHeight:30}}>
+						체크된 항목에 해당하는 메뉴는 <Text style = {{color:"#ff7a00",fontSize:20,lineHeight:30}}>주황색</Text> 으로 표시됩니다.
 					</Text>
-				</View>
-				<View style = {styles.tableContainer}>
+				<Card style = {{fontSize : 20, height:420, width:"95%"}}>
 					{tableRow.map(elem => 							
 						(
-							<View key = {"tablerow"+elem} style = {styles.rowContainer}>
+							<CardItem key = {"tablerow"+elem} style = {{flexDirection:"row", height: 70}}>
 								{allAllergic.slice(elem,elem+3).map(allergic =>
 								(
-									<View style = {styles.elem} key = {"allergic"+allergic.num}>
-										<CheckBox
-										title={allergic.value}											
-										checked={posAllergic[allergic.num]}
+									<CardItem key = {"allergic"+allergic.num} style ={{flex:1, justifyContent:"space-around"}}>
+										<Button bordered = {!posAllergic[allergic.num]}
 										onPress={() => toggleAllergic(allergic.num)}
-										size ={14}
-										checkedColor = {"#83dcb7"}
-										/>
-									</View>
+											style = {{width:90}}>
+											<Text>{allergic.value}</Text>
+										</Button>
+									</CardItem>
 								))}
-							</View>
+							</CardItem>
 						))}
-				</View>				
+					</Card >
+					</Content>
+				<View >
+						<Button block onPress = {() => {
+							submitAllergic();
+							navigation.goBack()
+						}}
+							>
+							<Text>완료</Text>
+						</Button>
+						</View>
 
-				<View style = {styles.buttonContainer}>
 
-					<TouchableOpacity onPress = {() => submitAllergic()}>
-						<Text>완료</Text>
-					</TouchableOpacity>
+					
 
-					</View>
-			</View>
+			</Container>
 		)
 		
 	}
 }
-
-const styles = StyleSheet.create({
-	container:{
-		flex:1,
-		justifyContent:"center",
-		backgroundColor:"#b0b0b0",
-		margin:0
-	},
-	header:{
-		height:55,
-		backgroundColor:"yellow"
-	},
-	headerText:{
-		fontSize:20,
-		color:"white",
-	},
-	title:{
-		flex:2,
-		backgroundColor:"blue",
-		alignItems:"center",
-		padding:10,
-		lineHeight:1.5
-	},
-	titleText:{
-		fontSize:26
-		
-	},
-	tableContainer:{
-		flex:4,
-		paddingTop:5,
-		borderWidth:4
-		
-	},
-	rowContainer:{
-		
-		flexDirection: 'row' 
-	},
-	elem:{
-		width:"33%",
-		justifyContent: 'space-around',
-		
-	},
-	buttonContainer:{
-		flex:1,
-		backgroundColor:"red",
-		flexDirection:"row"
-	}
-})
 
 /*<TouchableOpacity key = {"allergic"+allergic.num} onPress={() => toggleAllergic(allergic.num)} style = {styles.elem}>
 										<Text>{allergic.value}</Text>

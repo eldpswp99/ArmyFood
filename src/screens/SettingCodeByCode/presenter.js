@@ -3,14 +3,14 @@ import {Modal, View, Text,StyleSheet,TouchableOpacity,Button} from "react-native
 import * as Enums from "../../Enums";
 
 
-class SettingShowMeal extends Component{
+class SettingCodeByTable extends Component{
 	
 	render(){
 		const {isSettingCode,setShowSetting} = this.props;
 		
 		return(
 			<View styles = {styles.container}>
-				<Text>SettingShowMeal</Text>
+				<Text>SettingCodeByTable</Text>
 			</View>
 		)
 		
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default SettingShowMeal;
+export default SettingCodeByTable;
