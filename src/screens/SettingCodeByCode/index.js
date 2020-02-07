@@ -1,21 +1,23 @@
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
-import SettingCodeByTable from "./presenter";
+import SettingCodeByCode from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {isSettingCode} = state;
+
+	const{inputCode,allCode} = state;
 	
 	return {
-		isSettingCode
+		inputCode,
+		allCode
 	}
 }
 
 function mapDispatchToProps(dispatch){
 	return {
-		setShowSetting : bindActionCreators(actionCreators.setShowSetting,dispatch),
-		setCode : bindActionCreators(actionCreators.setCode,dispatch)
+		setCode : bindActionCreators(actionCreators.setCode,dispatch),
+		setInputCode : bindActionCreators(actionCreators.setInputCode,dispatch)
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SettingCodeByTable);
+export default connect(mapStateToProps,mapDispatchToProps)(SettingCodeByCode);

@@ -6,8 +6,8 @@ import { CheckBox } from 'react-native-elements';
 
 
 class SettingAllergic extends Component{
-
-	render(){		
+	
+	render(){				
 		const {isSettingAllergic,
 					 submitAllergic,
 					 allAllergic,
@@ -34,10 +34,10 @@ class SettingAllergic extends Component{
 					</Body>
 				</Header>
 				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
-					<Text style = {{padding:20 ,fontSize:20,lineHeight:30}}>
-						체크된 항목에 해당하는 메뉴는 <Text style = {{color:"#ff7a00",fontSize:20,lineHeight:30}}>주황색</Text> 으로 표시됩니다.
+					<Text style = {{padding:20 ,fontSize:24,lineHeight:30}}>
+						체크된 항목에 해당하는 메뉴는 <Text style = {{color:"#ff7a00",fontSize:24,lineHeight:36}}>주황색</Text> 으로 표시됩니다.
 					</Text>
-				<Card style = {{fontSize : 20, height:420, width:"95%"}}>
+				<Card style = {{fontSize : 24, height:420, width:"95%"}}>
 					{tableRow.map(elem => 							
 						(
 							<CardItem key = {"tablerow"+elem} style = {{flexDirection:"row", height: 70}}>

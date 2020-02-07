@@ -14,6 +14,12 @@ const SET_SHOW_SETTING = "SET_SHOW_SETTING";
 const TOGGLE_ALLERGIC = "TOGGLE_ALLERGIC";
 const SUBMIT_ALLERGIC = "SUBMIT_ALLERGIC";
 const CANCEL_ALLERGIC = "CANCEL_ALLERGIC";
+const SET_INPUT_CODE = "SET_INPUT_CODE";
+const SET_INPUT_TABLE = "SET_INPUT_TABLE";
+const SET_POS_CODE = "SET_POS_CODE";
+const SET_QUESTION = "SET_QUESTION";
+const CANCEL_SET_TABLE = "CANCEL_SET_TABLE";
+const SUBMIT_SET_TABLE = "SUBMIT_SET_TABLE";
 
 //Action Creators
 
@@ -104,7 +110,46 @@ function cancelAllergic(){
 	}
 }
 
+function setInputCode(inputCode){
+	return{
+		type:SET_INPUT_CODE,
+		inputCode
+	}
+}
 
+function setInputTable(inputTable){
+	return{
+		type:SET_INPUT_TABLE,
+		inputTable
+	}
+}
+
+function setPosCode(posCode){
+	return{
+		type:SET_POS_CODE,
+		posCode
+	}
+}
+
+function setQuestion(question){
+	return{
+		type:SET_QUESTION,
+		question
+	}
+}
+
+function cancelSetTable(){
+	return{
+		type:CANCEL_SET_TABLE
+	}
+}
+
+function submitSetTable(code){
+	return{
+		type:SUBMIT_SET_TABLE,
+		code,
+	}
+}
 
 //Reducer
 
@@ -122,7 +167,7 @@ const initialState = {
 		"7369",
 		"3333"
 	],
-	pos : [
+	posCode : [
 		"ATC",
 		"1691",
 		"2171",
@@ -224,6 +269,9 @@ const initialState = {
 	meal:"brst",
 	isDatePicker:false,
 	isSettingMain:false,
+	inputCode:"",
+	inputTable:"",
+	question:1
 }
 
 function reducer(state = initialState,action){
@@ -252,6 +300,18 @@ function reducer(state = initialState,action){
 			return applySubmitAllergic(state);
 		case CANCEL_ALLERGIC:
 			return applyCancelAllergic(state);
+		case SET_INPUT_CODE:
+			return applySetInputCode(state,action.inputCode);
+		case SET_INPUT_TABLE:
+			return applySetInputCode(state,action.inputTable);
+		case SET_POS_CODE:
+			return applySetPosCode(state,action.posCode);
+		case SET_QUESTION:
+			return applySetQuestion(state,action.question);
+		case CANCEL_SET_TABLE:
+			return applyCancelSetTable(state);
+		case SUBMIT_SET_TABLE:
+			return applySubmitSetTable(state,action.code);
 		default :
 			return state;
 	}
@@ -367,6 +427,53 @@ function applyCancelAllergic(state){
 		isSettingAllergic:false
 	}
 }
+	
+function applySetInputCode(state,inputCode){
+	return{
+		...state,
+		inputCode
+	}
+}
+	
+function applySetInputTable(state,inputTable){
+	return{
+		...state,
+		inputTable
+	}
+}
+	
+function applySetPosCode(state,posCode){
+	return{
+		...state,
+		posCode
+	}
+}
+	
+function applySetQuestion(state,question){
+	return{
+		...state,
+		question
+	}
+}
+	
+function applyCancelSetTable(state){
+	return{
+		...state,
+		inputTable:"",
+		pos:state.allCode,
+		question:1
+	}
+}
+	
+function applySubmitSetTable(state,code){
+	return{
+		...state,
+		code,
+		inputTable:"",
+		pos:state.allCode,
+		question:1
+	}
+}
 
 //Export Action Creators
 
@@ -383,6 +490,12 @@ const actionCreators = {
 	toggleAllergic,
 	submitAllergic,
 	cancelAllergic,
+	setInputCode,
+	setInputTable,
+	setPosCode,
+	setQuestion,
+	cancelSetTable,
+	submitSetTable
 };
 
 export {actionCreators};

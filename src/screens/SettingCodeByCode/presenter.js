@@ -1,30 +1,55 @@
 import React,{Component} from "react";
-import {Modal, View, Text,StyleSheet,TouchableOpacity,Button} from "react-native";
+import { Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Card,CardItem,Form,Item,Input} from 'native-base';
+import {View,Platform,StyleSheet,StatusBar,Alert} from "react-native";
 import * as Enums from "../../Enums";
 
-
-class SettingCodeByTable extends Component{
+class SettingCodeByCode extends Component{
 	
 	render(){
-		const {isSettingCode,setShowSetting} = this.props;
-		
+		const {inputCode,allCode,setInputCode,setCode} = this.props;
+		const {navigation} = this.props;
 		return(
-			<View styles = {styles.container}>
-				<Text>SettingCodeByTable</Text>
-			</View>
+			<Container>
+				<Header>
+					<Left>
+						<Button transparent onPress = {() =>	{
+							setInputCode("")
+							navigation.goBack()}}>
+							<Icon name = "ios-arrow-back" style = {{fontSize:27}} />
+						</Button>
+					</Left>
+					<Body>
+						<Title>식단설정-코드</Title>
+					</Body>
+				</Header>
+				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
+					<Text style = {{padding:20 ,fontSize:24,lineHeight:36}}>
+						제공받을 식단표의 식단코드를 입력해주세요
+					</Text>
+						<Item bordered style = {{width : "90%"}}>
+							<Input placeholder = "코드 입력"
+								onChangeText={text => setInputCode(text)}
+								value = {inputCode}/>
+							<Button transparent onPress = {() => setInputCode("")}>
+								<Icon type = "MaterialIcons" name='cancel'/>
+							</Button>
+						</Item>
+					<Button style = {{marginTop:20}} block onPress = {() => {
+							if(!allCode.includes(inputCode)){
+								Alert.alert("코드를 사용할 수 없습니다!","유효한 코드가 아닙니다")
+								setInputCode("");
+							}else{
+								setCode(inputCode);
+								navigation.goBack()	
+							}
+						}}
+							>
+							<Text>완료</Text>
+						</Button>
+				</Content>
+			</Container>
 		)
-		
 	}
 }
 
-const styles = StyleSheet.create({
-	container:{
-		flex:1,
-		justifyContent:"center",
-		backgroundColor:"#b0b0b0",
-		margin:0
-	},
-})
-
-
-export default SettingCodeByTable;
+export default SettingCodeByCode;
