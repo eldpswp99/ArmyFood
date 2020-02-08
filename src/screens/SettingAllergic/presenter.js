@@ -3,6 +3,8 @@ import { Container,Icon, Button,Header,List,ListItem, Content,Title, Text ,Left,
 import {View,Platform,StyleSheet,StatusBar} from "react-native";
 import * as Enums from "../../Enums";
 import { CheckBox } from 'react-native-elements';
+import { CommonActions } from '@react-navigation/native';
+
 
 
 class SettingAllergic extends Component{
@@ -13,6 +15,7 @@ class SettingAllergic extends Component{
 					 allAllergic,
 					 toggleAllergic,
 					 posAllergic,
+					 init,
 					 cancelAllergic
 			} = this.props;
 		
@@ -32,6 +35,7 @@ class SettingAllergic extends Component{
 					<Body>
 						<Title>알레르기 설정</Title>
 					</Body>
+					<Right></Right>
 				</Header>
 				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
 					<Text style = {{padding:20 ,fontSize:24,lineHeight:30}}>
@@ -58,7 +62,16 @@ class SettingAllergic extends Component{
 				<View >
 						<Button block onPress = {() => {
 							submitAllergic();
-							navigation.goBack()
+							init ? navigation.dispatch(
+							CommonActions.reset({
+								index: 0,
+								routes: [
+									{
+										name: 'MainDrawer',
+									}
+								],
+							})
+          ) :navigation.goBack()
 						}}
 							>
 							<Text>완료</Text>

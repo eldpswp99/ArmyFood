@@ -4,12 +4,13 @@ import SettingAllergic from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {isSettingAllergic,allAllergic,posAllergic} = state;
+	const {init,isSettingAllergic,allAllergic,posAllergic} = state;
 	
 	return {
 		isSettingAllergic,
 		allAllergic,
-		posAllergic
+		posAllergic,
+		init
 	}
 }
 

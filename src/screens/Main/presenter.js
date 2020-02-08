@@ -3,10 +3,12 @@ import React,{Component} from "react";
 import { Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
 import {View,Platform,StyleSheet,StatusBar} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { Appearance } from 'react-native-appearance';
 
 import {MONTH} from "../../Enums";
 import Loader from "../../components/Loader";
 import Modal from "react-native-modal";
+
 
 import { NavigationContainer,useFocusEffect } from '@react-navigation/native';
 import SettingAllergic from "../SettingAllergic";
@@ -20,9 +22,14 @@ class Main extends Component{
 		return elem < 10 ? "0"+elem : elem;
 	}
 	
-	function 
+	componentDidMount(){
+		
+	}
 	
 	render(){
+		let colorScheme = Appearance.getColorScheme();
+		let darkMode = colorScheme === 'dark';
+		
 		const {
 			code,
 			food,
@@ -118,6 +125,7 @@ class Main extends Component{
 								onCancel = {() => setShowDatePicker(false)} 
 								maximumDate={fixDate.getTime() + MONTH}
 								minimumDate={fixDate.getTime() - MONTH}
+								isDarkModeEnabled = {darkMode}
 							/>
 					</Content>	
 				

@@ -35,6 +35,7 @@ class SettingCodeByTable extends Component{
 					<Body>
 						<Title>식단설정-식단표</Title>
 					</Body>
+					<Right></Right>
 				</Header>
 				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
 					<Text style = {{padding:20 ,fontSize:24,lineHeight:36}}>

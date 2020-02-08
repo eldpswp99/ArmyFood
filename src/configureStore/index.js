@@ -7,7 +7,7 @@ import multi from 'redux-multi';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist : ['code',"isAllergic"]
+  whitelist : ['code',"isAllergic",]
 };
 
 const enhancedReducer = persistReducer(persistConfig, reducer);

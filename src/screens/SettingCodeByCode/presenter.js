@@ -6,7 +6,7 @@ import * as Enums from "../../Enums";
 class SettingCodeByCode extends Component{
 	
 	render(){
-		const {inputCode,allCode,setInputCode,setCode} = this.props;
+		const {inputCode,init,allCode,setInputCode,setCode} = this.props;
 		const {navigation} = this.props;
 		return(
 			<Container>
@@ -21,6 +21,7 @@ class SettingCodeByCode extends Component{
 					<Body>
 						<Title>식단설정-코드</Title>
 					</Body>
+					<Right></Right>
 				</Header>
 				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
 					<Text style = {{padding:20 ,fontSize:24,lineHeight:36}}>
@@ -40,6 +41,7 @@ class SettingCodeByCode extends Component{
 								setInputCode("");
 							}else{
 								setCode(inputCode);
+								init ? navigation.navigate("SettingAllergic") :
 								navigation.goBack()	
 							}
 						}}

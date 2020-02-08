@@ -151,6 +151,7 @@ function submitSetTable(code){
 	}
 }
 
+
 //Reducer
 
 const initialState = {
@@ -256,7 +257,7 @@ const initialState = {
 	],
 	isAllergic:Array.from(new Array(Enums.ALLERGIC+1),()=>false),
 	posAllergic:Array.from(new Array(Enums.ALLERGIC+1),()=>false),
-	code:"1691",
+	code:undefined,
 	allergic:[],
 	food:[],
 	isLoading:true,
@@ -271,7 +272,8 @@ const initialState = {
 	isSettingMain:false,
 	inputCode:"",
 	inputTable:"",
-	question:1
+	question:1,
+	init:true
 }
 
 function reducer(state = initialState,action){
@@ -416,7 +418,8 @@ function applySubmitAllergic(state){
 	return{
 		...state,
 		isAllergic:[...state.posAllergic],
-		isSettingAllergic:false
+		isSettingAllergic:false,
+		init:false
 	}
 }
 
@@ -471,7 +474,15 @@ function applySubmitSetTable(state,code){
 		code,
 		inputTable:"",
 		pos:state.allCode,
-		question:1
+		question:1,
+		
+	}
+}
+	
+function applySetInit(state,init){
+	return{
+		...state,
+		init
 	}
 }
 
@@ -495,7 +506,7 @@ const actionCreators = {
 	setPosCode,
 	setQuestion,
 	cancelSetTable,
-	submitSetTable
+	submitSetTable,
 };
 
 export {actionCreators};

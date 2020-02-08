@@ -5,11 +5,12 @@ import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
 
-	const{inputCode,allCode} = state;
+	const{inputCode,allCode,init} = state;
 	
 	return {
 		inputCode,
-		allCode
+		allCode,
+		init
 	}
 }
 

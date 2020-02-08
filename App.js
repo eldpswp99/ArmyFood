@@ -6,11 +6,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { Provider } from "react-redux";
 import configureStore from "./src/configureStore";
 import { PersistGate } from 'redux-persist/es/integration/react';
-import Main from "./src/screens/Main";
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
+import Init from "./src/screens/Init";
+import Main from "./src/screens/Main";
+import MainDrawer from "./src/screens/MainDrawer";
 import SettingAllergic from "./src/screens/SettingAllergic";
 import SettingCodeByTable from "./src/screens/SettingCodeByTable";
 import SettingCodeByCode from "./src/screens/SettingCodeByCode";
@@ -21,8 +23,6 @@ import { createDrawerNavigator,DrawerContentScrollView,DrawerItemList} from '@re
 const { store, persistor } = configureStore();
 
 const Stack = createStackNavigator();
-
-const Drawer = createDrawerNavigator();
 
 
 export default class App extends React.Component {
@@ -35,6 +35,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     await Font.loadAsync({
+			BMHANNA_11yrs:require("./assets/fonts/BMHANNA_11yrs_ttf.ttf"),
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
       ...Ionicons.font,
@@ -47,26 +48,20 @@ export default class App extends React.Component {
     if (!this.state.isReady) {
       return <AppLoading />;
     }
-
+		
+		console.log();
+		
     return (
 	  <Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<NavigationContainer>
-					<Drawer.Navigator drawerContent = {
-					props => (
-						<DrawerContentScrollView {...props}>
-						<DrawerItemList {...props} />
-						</DrawerContentScrollView>)
-				}
-						initialRouteName = "Main"
-						>
-					<Drawer.Screen name="뒤로" component = {Main} />
-						
-					<Drawer.Screen name="알레르기 설정" component={SettingAllergic} />
-					<Drawer.Screen name="식단설정-식단표" component={SettingCodeByTable} />
-					<Drawer.Screen name="식단설정-코드" component={SettingCodeByCode} />
-					<Drawer.Screen name="식단보기 설정" component={SettingShowMeal} />
-				</Drawer.Navigator>
+						<Stack.Navigator headerMode = "none" initialRouteName = {store.getState().init === true ? "Init" : "MainDrawer"}>
+							<Stack.Screen name = "Init" component = {Init}/>
+							<Stack.Screen name = "SettingAllergic" component = {SettingAllergic}/>
+							<Stack.Screen name = "SettingCodeByTable" component = {SettingCodeByTable}/>
+							<Stack.Screen name = "SettingCodeByCode" component = {SettingCodeByCode}/>
+							<Stack.Screen name = "MainDrawer" component = {MainDrawer} />
+						</Stack.Navigator>										
 				</NavigationContainer>
 			</PersistGate>
 	  </Provider>
