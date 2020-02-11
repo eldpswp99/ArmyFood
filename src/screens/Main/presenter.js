@@ -5,10 +5,9 @@ import {View,Platform,StyleSheet,StatusBar} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Appearance } from 'react-native-appearance';
 
-import {MONTH} from "../../Enums";
+import {DAY,MONTH} from "../../Enums";
 import Loader from "../../components/Loader";
 import Modal from "react-native-modal";
-
 
 import { NavigationContainer,useFocusEffect } from '@react-navigation/native';
 import SettingAllergic from "../SettingAllergic";
@@ -22,8 +21,11 @@ class Main extends Component{
 		return elem < 10 ? "0"+elem : elem;
 	}
 	
-	componentDidMount(){
+	afterDay(addnum){
+		const {year,month,day,setDate} = this.props;
 		
+		const newDay = new Date(new Date(year,month-1,day).getTime() + DAY*addnum);
+		setDate(newDay.getFullYear(),newDay.getMonth()+1,newDay.getDate(),false);
 	}
 	
 	render(){
@@ -47,13 +49,14 @@ class Main extends Component{
 			nextMeal,
 			fixYear,
 			fixMonth,
-			fixDay
+			fixDay,
 		} = this.props;
 		
 		
 		let mealVal;
 		const curDate = new Date(year,month-1,day);
 		const fixDate = new Date(fixYear,fixMonth-1,fixDay);
+	
 		
 		switch(meal){
 			case "brst":
@@ -94,30 +97,48 @@ class Main extends Component{
 							</Button>
 						</Left>
 						<Body>
-							<Title>식단코드 : {`${code}`}</Title>	
+							<Title>오늘의 짬</Title>	
 						</Body>
 						<Right>
+							<Button transparent onPress = {() => setDate(fixYear,fixMonth,fixDay,false)}>
+								 <Icon name='md-refresh' style = {{fontSize : 27}}/>
+							</Button>
 							<Button transparent onPress = {() => setShowDatePicker(true)}>
 								 <Icon name='ios-calendar' style = {{fontSize : 27}}/>
 							</Button>
 						</Right>
-					</Header>				
-					<Content> 
-						<Card>
-							<CardItem header>
-								<Body>
-										<Text>{`${year}년 ${month}월 ${day}일 - ${mealVal}`}</Text>									
-								</Body>
-							</CardItem>
+					</Header>	
+					<Content contentContainerStyle={{ alignItems: 'center'}}> 
+						<View style = {{flexDirection:"row",alignItems:"center",justifyContent:"center", margin:5,marginTop:10}}>
+							{(fixDate.getTime()-MONTH < curDate.getTime()) ? (
+								<Button transparent onPress = {() => this.afterDay(-1)}>
+									<Icon type = "Entypo" name = "controller-fast-backward" />
+								</Button>
+							) : null}
+							<Text style = {{paddingRight:10, fontSize:20,fontWeight:"bold"}}>
+								{year%100}.{this.addZero(month)}.{this.addZero(day)}  |
+							</Text>
+							<Button bordered dark onPress = {() => nextMeal(meal)}>
+								<Text style = {{fontSize:20}}>{mealVal}</Text>
+							</Button>
+							{fixDate.getTime()+MONTH > curDate.getTime() ? (
+								<Button transparent onPress = {() => this.afterDay(1)}>
+									<Icon type = "Entypo" name = "controller-fast-forward" />
+								</Button>
+							) : null}
+						</View>
+						<Card style = {{padding:10,width:"95%"}}>
 							{tempData.map(elem => (
 								<CardItem key = {elem}>
 									<Body>
-										<Text>{elem}</Text>
+										<Text style ={{fontSize:23, padding:7}}>{elem}</Text>
 									</Body>
 								</CardItem>
 							))}
 						</Card>
-						
+						<View style = {{marginTop:5}}>
+							<Text>현재 제공받는 식단표의 식단코드는 {`${code}`}입니다.</Text>
+						</View >
 							<DateTimePickerModal
 								isVisible = {isDatePicker}
 								mode = "date"
