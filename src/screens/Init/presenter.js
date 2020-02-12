@@ -1,7 +1,5 @@
 import React,{Component} from "react";
-import { H1,Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
-import * as Enums from "../../Enums";
-
+import { Container,Icon, Button,Text } from 'native-base';
 
 class Init extends Component{
 	

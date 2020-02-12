@@ -16,7 +16,6 @@ import MainDrawer from "./src/screens/MainDrawer";
 import SettingAllergic from "./src/screens/SettingAllergic";
 import SettingCodeByTable from "./src/screens/SettingCodeByTable";
 import SettingCodeByCode from "./src/screens/SettingCodeByCode";
-import SettingShowMeal from "./src/screens/SettingShowMeal";
 
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItemList} from '@react-navigation/drawer';
 

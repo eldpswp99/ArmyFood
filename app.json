@@ -27,7 +27,7 @@
       "supportsTablet": true
     },
     "packagerOpts": {
-      "port": 55359
+      "port": 52915
     },
     "androidStatusBar": {
       "backgroundColor": "#000"

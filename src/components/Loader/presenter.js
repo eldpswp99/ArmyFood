@@ -1,5 +1,6 @@
 import React,{Component} from "react";
-import {View, Text,StyleSheet,StatusBar} from "react-native";
+import { Container,Icon, Button,Text } from 'native-base';
+import { Image ,View} from 'react-native';
 import axios from "axios";
 import {DAY} from "../../Enums";
 
@@ -7,19 +8,20 @@ class Loader extends Component{
 	
 	getData = () => {
 		
-		let mealdate = new Date();
+		let mealDate = new Date();
 		const {setFixDate,setDate,setMeal,allCode,addData,loadEnd,food} = this.props;
-			
-		const hour = mealdate.getHours();
+		setFixDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate());		
+		const hour = mealDate.getHours();
 		let meal = "brst";
-		if(9 <= hour <= 12) meal = "lunc";
-		else if(13 <= hour <= 18) meal = "dinr";
+		if(9 <= hour&& hour <= 12) meal = "lunc";
+		else if(13 <= hour && hour<= 18) meal = "dinr";
 		else if (hour >= 19){
-			mealdate = new Date(mealdate.getTime() + DAY);
+			mealDate = new Date(mealDate.getTime() + DAY);
 		}
 		
-		setDate(mealdate.getFullYear(),mealdate.getMonth()+1,mealdate.getDate(),false);
-		setFixDate(mealdate.getFullYear(),mealdate.getMonth()+1,mealdate.getDate());		
+		
+		setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
+		
 		
 		//데이터파싱필요
 		/*
@@ -34,7 +36,7 @@ class Loader extends Component{
 					}
 				]
 			}
-		*/
+		*//*
 		allCode.map(async (code) => {
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			const KEY = "3836313632323338303130303632303637";
@@ -70,7 +72,7 @@ class Loader extends Component{
 				code,
 				foodData:codeFoodTable
 			});
-		})
+		})*/
 	
 		loadEnd();
 	}
@@ -81,20 +83,12 @@ class Loader extends Component{
 	
 	render(){
 		return(
-			<View style = {styles.container}>
-			 <Text>isLoading</Text>
+			<View style={{ alignItems: 'center',justifyContent : "center",height:"100%",backgroundColor:"white"}}>
+				<Image source={require('../../../assets/images/K02.png')} style={{width:100,height:100}}/>
+				<Text style = {{fontFamily : "BMHANNA_11yrs", fontSize :25, marginTop:10}}>오늘의 짬</Text>
 			</View>
-		)
-		
+		)		
 	}
 }
-
-const styles = StyleSheet.create({
-	container :{
-		flex:1,
-		alignItems:"center",
-		justifyContent:"center"
-	}
-})
 
 export default Loader;

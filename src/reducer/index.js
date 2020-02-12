@@ -352,12 +352,12 @@ function applySetDate(state,year,month,day,isDatePicker){
 	}
 }
 
-function applySetFixDate(state,year,month,day){
+function applySetFixDate(state,fixYear,fixMonth,fixDay){
 	return{
 		...state,
-		year,
-		month,
-		day,
+		fixYear,
+		fixMonth,
+		fixDay,
 	}
 }
 

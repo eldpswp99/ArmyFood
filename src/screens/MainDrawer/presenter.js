@@ -1,15 +1,14 @@
 import React,{Component} from "react";
-import { H1,Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
 import * as Enums from "../../Enums";
 
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItemList} from '@react-navigation/drawer';
-const Drawer = createDrawerNavigator();
 
 import SettingAllergic from "../SettingAllergic";
 import SettingCodeByTable from "../SettingCodeByTable";
 import SettingCodeByCode from "../SettingCodeByCode";
 import Main from "../Main";
-import SettingShowMeal from "../SettingShowMeal";
+
+const Drawer = createDrawerNavigator();
 
 class MainDrawer extends Component{
 	

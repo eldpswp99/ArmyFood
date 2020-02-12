@@ -1,10 +1,7 @@
 import React,{Component} from "react";
 import { Container,Icon, Button,Header,List,ListItem, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
-import {View,Platform,StyleSheet,StatusBar} from "react-native";
-import * as Enums from "../../Enums";
-import { CheckBox } from 'react-native-elements';
+import {View} from "react-native";
 import { CommonActions } from '@react-navigation/native';
-
 
 
 class SettingAllergic extends Component{

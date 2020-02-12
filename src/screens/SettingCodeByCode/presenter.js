@@ -1,7 +1,6 @@
 import React,{Component} from "react";
-import { Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Card,CardItem,Form,Item,Input} from 'native-base';
+import { Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Form,Item,Input} from 'native-base';
 import {View,Platform,StyleSheet,StatusBar,Alert} from "react-native";
-import * as Enums from "../../Enums";
 
 class SettingCodeByCode extends Component{
 	

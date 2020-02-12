@@ -7,14 +7,6 @@ import { Appearance } from 'react-native-appearance';
 
 import {DAY,MONTH} from "../../Enums";
 import Loader from "../../components/Loader";
-import Modal from "react-native-modal";
-
-import { NavigationContainer,useFocusEffect } from '@react-navigation/native';
-import SettingAllergic from "../SettingAllergic";
-import SettingCodeByTable from "../SettingCodeByTable";
-import SettingCodeByCode from "../SettingCodeByCode";
-import SettingShowMeal from "../SettingShowMeal";
-
 
 class Main extends Component{	
 	addZero(elem){
@@ -22,12 +14,33 @@ class Main extends Component{
 	}
 	
 	afterDay(addnum){
-		const {year,month,day,setDate} = this.props;
+		const {year,month,day} = this.props;
 		
 		const newDay = new Date(new Date(year,month-1,day).getTime() + DAY*addnum);
-		setDate(newDay.getFullYear(),newDay.getMonth()+1,newDay.getDate(),false);
+		
+		return newDay;
 	}
 	
+	setDatebyDateInstance(date){
+		const {setDate} = this.props;
+		
+		setDate(date.getFullYear(),date.getMonth()+1,date.getDate(),false);
+	}
+	
+	yesterOrTodayOrTomorrow(){
+		const {year,month,day,fixYear,fixDay,fixMonth} = this.props;
+		
+		const curDate = new Date(year,month-1,day);
+		const fixDate = new Date(fixYear,fixMonth-1,fixDay);
+		const timeDiff = curDate.getTime() - fixDate.getTime();
+		if(timeDiff === DAY) return "(내일)";
+		else if(timeDiff === -DAY) return "(어제)";
+		if(timeDiff === 0) return "(오늘)";
+		
+		const dayDiff = parseInt(timeDiff/DAY);
+		const sign = dayDiff > 0 ? "+" : "";
+		return `(${sign}${dayDiff})`;
+	}
 	render(){
 		let colorScheme = Appearance.getColorScheme();
 		let darkMode = colorScheme === 'dark';
@@ -45,7 +58,6 @@ class Main extends Component{
 			meal,
 			isSettingMain,
 			isAllergic,
-			setShowSetting,
 			nextMeal,
 			fixYear,
 			fixMonth,
@@ -57,7 +69,6 @@ class Main extends Component{
 		const curDate = new Date(year,month-1,day);
 		const fixDate = new Date(fixYear,fixMonth-1,fixDay);
 	
-		
 		switch(meal){
 			case "brst":
 				mealVal="아침";
@@ -80,10 +91,10 @@ class Main extends Component{
 			return elem["date"] == `${year}${this.addZero(month)}${this.addZero(day)}`
 		})
 		console.log(TodayFoodTable);*/
-		//if(isLoading) return <Loader/>;
+		if(isLoading) return <Loader/>;
 /*		if(!code) return <Setting/>*/
 		
-		const tempData = ["밥","배춧국 (5)(6)","애호박나물 (9)","쇠고기감자간장조림 (5)(6)(16)","깍두기"];
+		const tempData = ["밥","배춧국 (5)(6)","애호박나물 (9)","쇠고기감자간장조림 (5)(6)(16)","깍두기","깍두기1"];
 		
 	const {navigation} = this.props;
 		return(
@@ -104,34 +115,34 @@ class Main extends Component{
 								 <Icon name='md-refresh' style = {{fontSize : 27}}/>
 							</Button>
 							<Button transparent onPress = {() => setShowDatePicker(true)}>
-								 <Icon name='ios-calendar' style = {{fontSize : 27}}/>
+								 <Icon name='ios-calendar' style = {{fontSize : 27,}}/>
 							</Button>
 						</Right>
 					</Header>	
 					<Content contentContainerStyle={{ alignItems: 'center'}}> 
 						<View style = {{flexDirection:"row",alignItems:"center",justifyContent:"center", margin:5,marginTop:10}}>
 							{(fixDate.getTime()-MONTH < curDate.getTime()) ? (
-								<Button transparent onPress = {() => this.afterDay(-1)}>
+								<Button transparent onPress = {() => this.setDatebyDateInstance(this.afterDay(-1))}>
 									<Icon type = "Entypo" name = "controller-fast-backward" />
 								</Button>
 							) : null}
 							<Text style = {{paddingRight:10, fontSize:20,fontWeight:"bold"}}>
-								{year%100}.{this.addZero(month)}.{this.addZero(day)}  |
+								{this.addZero(month)}.{this.addZero(day)} {this.yesterOrTodayOrTomorrow()} |
 							</Text>
-							<Button bordered dark onPress = {() => nextMeal(meal)}>
+							<Button bordered dark onPress = {() => nextMeal(meal)}  style = {{borderRadius:7}}>
 								<Text style = {{fontSize:20}}>{mealVal}</Text>
 							</Button>
 							{fixDate.getTime()+MONTH > curDate.getTime() ? (
-								<Button transparent onPress = {() => this.afterDay(1)}>
+								<Button transparent onPress = {() => this.setDatebyDateInstance(this.afterDay(1))}>
 									<Icon type = "Entypo" name = "controller-fast-forward" />
 								</Button>
 							) : null}
 						</View>
-						<Card style = {{padding:10,width:"95%"}}>
+						<Card style = {{padding:10,width:"95%", borderRadius:10}}>
 							{tempData.map(elem => (
 								<CardItem key = {elem}>
 									<Body>
-										<Text style ={{fontSize:23, padding:7}}>{elem}</Text>
+										<Text style ={{fontSize:23, padding:5}}>{elem}</Text>
 									</Body>
 								</CardItem>
 							))}
