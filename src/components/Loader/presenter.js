@@ -3,11 +3,11 @@ import { Container,Icon, Button,Text } from 'native-base';
 import { Image ,View} from 'react-native';
 import axios from "axios";
 import {DAY} from "../../Enums";
+import {KEY} from "react-native-dotenv";
 
 class Loader extends Component{
 	
 	getData = () => {
-		
 		let mealDate = new Date();
 		const {setFixDate,setDate,setMeal,allCode,addData,loadEnd,food} = this.props;
 		setFixDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate());		
@@ -19,8 +19,7 @@ class Loader extends Component{
 			mealDate = new Date(mealDate.getTime() + DAY);
 		}
 		
-		
-		setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
+setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
 		
 		
 		//데이터파싱필요
@@ -36,12 +35,12 @@ class Loader extends Component{
 					}
 				]
 			}
-		*//*
-		allCode.map(async (code) => {
+		*/
+			/*allCode.map(async (code) => {	
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
-			const KEY = "3836313632323338303130303632303637";
-			const {data } = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/500`);
-			let curDate = "";
+			const data  = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/1000`);
+			console.log(data);*/
+			/*let curDate = "";
 			let tempbrst = [];
 			let templunc = [];
 			let tempdinr = [];

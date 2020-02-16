@@ -44,7 +44,7 @@ class Main extends Component{
 	render(){
 		let colorScheme = Appearance.getColorScheme();
 		let darkMode = colorScheme === 'dark';
-		
+				
 		const {
 			code,
 			food,
