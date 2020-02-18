@@ -4,6 +4,12 @@ import {View,Platform,StyleSheet,StatusBar,Alert} from "react-native";
 
 class SettingCodeByCode extends Component{
 	
+	stableGoBack(){
+		const {navigation} = this.props;
+		const {index} = navigation.dangerouslyGetState();
+		if(index > 0) navigation.goBack();
+	}
+	
 	render(){
 		const {inputCode,init,allCode,setInputCode,setCode} = this.props;
 		const {navigation} = this.props;
@@ -13,7 +19,8 @@ class SettingCodeByCode extends Component{
 					<Left>
 						<Button transparent onPress = {() =>	{
 							setInputCode("")
-							navigation.goBack()}}>
+							this.stableGoBack();
+							}}>
 							<Icon name = "ios-arrow-back" style = {{fontSize:27}} />
 						</Button>
 					</Left>
@@ -40,8 +47,7 @@ class SettingCodeByCode extends Component{
 								setInputCode("");
 							}else{
 								setCode(inputCode);
-								init ? navigation.navigate("SettingAllergic") :
-								navigation.goBack()	
+								init ? navigation.navigate("SettingAllergic") : this.stableGoBack();
 							}
 						}}
 							>

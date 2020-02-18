@@ -5,6 +5,12 @@ import * as Enums from "../../Enums";
 
 class SettingCodeByTable extends Component{
 	
+	stableGoBack(){
+		const {navigation} = this.props;
+		const {index} = navigation.dangerouslyGetState();
+		if(index > 0) navigation.goBack();
+	}
+	
 	render(){
 		const {
 			inputTable,
@@ -22,13 +28,15 @@ class SettingCodeByTable extends Component{
 			submitSetTable
 		} = this.props;
 		const {navigation} = this.props;
+		const {index} = navigation.dangerouslyGetState();
+		
 		return(
 			<Container>
 				<Header>
 					<Left>
 						<Button transparent onPress = {() =>	{
 							cancelSetTable();
-							navigation.goBack()}}>
+							this.stableGoBack()}}>
 							<Icon name = "ios-arrow-back" style = {{fontSize:27}} />
 						</Button>
 					</Left>
@@ -58,7 +66,7 @@ class SettingCodeByTable extends Component{
 								setInputCode("");
 							}else{
 								setCode(inputTable);
-								navigation.goBack()	
+								this.stableGoBack();
 							}
 						}}
 							>

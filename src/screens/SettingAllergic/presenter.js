@@ -6,6 +6,12 @@ import { CommonActions } from '@react-navigation/native';
 
 class SettingAllergic extends Component{
 	
+	stableGoBack(){
+		const {navigation} = this.props;
+		const {index} = navigation.dangerouslyGetState();
+		if(index > 0) navigation.goBack();
+	}
+	
 	render(){				
 		const {isSettingAllergic,
 					 submitAllergic,
@@ -25,7 +31,7 @@ class SettingAllergic extends Component{
 						<Button transparent onPress = {() => 
 					{
 						cancelAllergic();
-						navigation.goBack()}}>
+						this.stableGoBack()}}>
 							<Icon name = "ios-arrow-back" style = {{fontSize:27}} />
 						</Button>
 					</Left>
@@ -68,7 +74,7 @@ class SettingAllergic extends Component{
 									}
 								],
 							})
-          ) :navigation.goBack()
+          ) :this.stableGoBack();
 						}}
 							>
 							<Text>완료</Text>

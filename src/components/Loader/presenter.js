@@ -36,11 +36,14 @@ setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
 				]
 			}
 		*/
-			/*allCode.map(async (code) => {	
+			allCode.map(async (code) => {	
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
-			const data  = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/1000`);
-			console.log(data);*/
-			/*let curDate = "";
+			
+			try{
+				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/1000`);
+						
+			if(!data[`${SERVICE}`] || !data[`${SERVICE}`].row) return null;
+			let curDate = "";
 			let tempbrst = [];
 			let templunc = [];
 			let tempdinr = [];
@@ -66,12 +69,18 @@ setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
 				if(elem["lunc"] !== "") templunc = templunc.concat(elem["lunc"]);
 				if(elem["dinr"] !== "") tempdinr = tempdinr.concat(elem["dinr"]);
 			})
-			
 			addData({
 				code,
 				foodData:codeFoodTable
 			});
-		})*/
+				
+			}catch(error){
+				console.error(error);		
+			}
+			
+			
+			
+		})
 	
 		loadEnd();
 	}

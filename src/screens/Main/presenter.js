@@ -27,6 +27,16 @@ class Main extends Component{
 		setDate(date.getFullYear(),date.getMonth()+1,date.getDate(),false);
 	}
 	
+	checkAllergic(food){
+		const {isAllergic} = this.props;
+		
+		for(let i = 1;i<=18;i++){
+			if(isAllergic[i] && food.includes(`(${i})`)) return true;
+		}
+		
+		return false;
+	}
+	
 	yesterOrTodayOrTomorrow(){
 		const {year,month,day,fixYear,fixDay,fixMonth} = this.props;
 		
@@ -64,6 +74,7 @@ class Main extends Component{
 			fixDay,
 		} = this.props;
 		
+		if(isLoading) return <Loader/>;
 		
 		let mealVal;
 		const curDate = new Date(year,month-1,day);
@@ -83,19 +94,15 @@ class Main extends Component{
 		
 		//sort후 day차례대로
 		
-		/*const foodTable = food.find(elem => {
-			console.log(elem["code"] == code);
-			return elem["code"] == code;
-		});*/
-		/*const TodayFoodTable = foodTable["foodData"].find(elem => {
-			return elem["date"] == `${year}${this.addZero(month)}${this.addZero(day)}`
+		const foodTable = food.find(elem => elem["code"] == code);
+		let TodayFoodTable = ["해당하는 데이터가 존재하지 않습니다"];
+				
+		if(foodTable) TodayFoodTable = foodTable["foodData"].find(elem => {
+			return elem["date"] === `${year}${this.addZero(month)}${this.addZero(day)}`;
 		})
-		console.log(TodayFoodTable);*/
-		if(isLoading) return <Loader/>;
-/*		if(!code) return <Setting/>*/
 		
-		const tempData = ["밥","배춧국 (5)(6)","애호박나물 (9)","쇠고기감자간장조림 (5)(6)(16)","깍두기","깍두기1"];
-		
+
+	
 	const {navigation} = this.props;
 		return(
 				<Container>
@@ -121,7 +128,7 @@ class Main extends Component{
 					</Header>	
 					<Content contentContainerStyle={{ alignItems: 'center'}}> 
 						<View style = {{flexDirection:"row",alignItems:"center",justifyContent:"center", margin:5,marginTop:10}}>
-							{(fixDate.getTime()-MONTH < curDate.getTime()) ? (
+							{(fixDate.getTime()-DAY*3 < curDate.getTime()) ? (
 								<Button transparent onPress = {() => this.setDatebyDateInstance(this.afterDay(-1))}>
 									<Icon type = "Entypo" name = "controller-fast-backward" />
 								</Button>
@@ -132,20 +139,23 @@ class Main extends Component{
 							<Button bordered dark onPress = {() => nextMeal(meal)}  style = {{borderRadius:7}}>
 								<Text style = {{fontSize:20}}>{mealVal}</Text>
 							</Button>
-							{fixDate.getTime()+MONTH > curDate.getTime() ? (
+							{fixDate.getTime()+DAY*3 > curDate.getTime() ? (
 								<Button transparent onPress = {() => this.setDatebyDateInstance(this.afterDay(1))}>
 									<Icon type = "Entypo" name = "controller-fast-forward" />
 								</Button>
 							) : null}
 						</View>
 						<Card style = {{padding:10,width:"95%", borderRadius:10}}>
-							{tempData.map(elem => (
+							{TodayFoodTable && TodayFoodTable[`${meal}`] ? TodayFoodTable[`${meal}`].map(elem => (
 								<CardItem key = {elem}>
 									<Body>
-										<Text style ={{fontSize:23, padding:5}}>{elem}</Text>
+										<Text style ={{fontSize:23, padding:5, color:this.checkAllergic(elem) ? "#ff7a00" : "black"}}>{elem}</Text>
 									</Body>
 								</CardItem>
-							))}
+							)) : 
+							<Text>
+								데이터를 불러오는 중입니다...
+							</Text>}
 						</Card>
 						<View style = {{marginTop:5}}>
 							<Text>현재 제공받는 식단표의 식단코드는 {`${code}`}입니다.</Text>
