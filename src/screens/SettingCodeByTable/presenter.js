@@ -4,11 +4,43 @@ import {View,Platform,StyleSheet,StatusBar,Alert} from "react-native";
 import * as Enums from "../../Enums";
 
 class SettingCodeByTable extends Component{
+	addZero(elem){
+		return elem < 10 ? "0"+elem : elem;
+	}
 	
 	stableGoBack(){
 		const {navigation} = this.props;
 		const {index} = navigation.dangerouslyGetState();
 		if(index > 0) navigation.goBack();
+	}
+	
+	nextPos(input){
+		const {food,posCode,fixMonth,fixYear,question,nextQuestion} = this.props;
+		
+		const nextPos = posCode.filter(code => {
+			if(!food) return false;
+			
+			const foodTable = food.find(elem => elem["code"] == code);
+			
+			if(!foodTable || !foodTable["foodData"]) return false;
+			
+			const todayFoodTable = foodTable["foodData"].find(elem => {
+				return elem["date"] === `${fixYear}${this.addZero(fixMonth)}${this.addZero(question)}`;
+			});
+			
+			if(!todayFoodTable) return false;
+			
+			
+			let isContains = false;
+			
+			todayFoodTable["lunc"].map(elem => {
+				if(elem.includes(input)) isContains  = true;
+			})
+
+			return isContains;			
+		})
+		
+		return nextPos;
 	}
 	
 	render(){
@@ -20,10 +52,7 @@ class SettingCodeByTable extends Component{
 			question,
 			fixYear,
 			fixMonth,
-			setCode,
 			setInputTable,
-			setPosCode,
-			setQuestion,
 			cancelSetTable,
 			submitSetTable
 		} = this.props;
@@ -50,7 +79,7 @@ class SettingCodeByTable extends Component{
 						주어진 질문에 대한 답을 정확히 적어주세요<Text style = {{paddingLeft : 15,fontSize:12,lineHeight:36}}>  남은 후보:<Text style = {{fontSize:12,lineHeight:36,color:"red"}}>{posCode.length}</Text>개</Text>
 					</Text>
 					<Text style = {{padding:20,paddingTop:0 ,fontSize:26,lineHeight:36}}>
-						Q{question} : {fixYear}년 {fixMonth}월 {question}일의 메뉴 중 하나를 정확히 입력하세요 (밥 제외) 
+						Q{question} : {fixYear}년 {fixMonth}월 {question}일의 점심 메뉴 중 하나를 정확히 입력하세요 (밥 제외) 
 					</Text>
 						<Item bordered style = {{width : "90%"}}>
 							<Input placeholder = "메뉴 입력"
@@ -61,11 +90,17 @@ class SettingCodeByTable extends Component{
 							</Button>
 						</Item>
 					<Button style = {{marginTop:20}} block onPress = {() => {
-							if(!allCode.includes(inputTable)){
-								Alert.alert("코드를 사용할 수 없습니다!","유효한 코드가 아닙니다")
-								setInputCode("");
+							const nextPosCode = this.nextPos(inputTable);
+							
+							if(nextPosCode.length === 1){
+								Alert.alert("코드 설정 완료!",`해당하는 식단코드는 ${nextPosCode[0]} 입니다`);
+								submitSetTable(nextPosCode[0]);
+								this.stableGoBack();
+							}else if(nextPosCode.length > 1 && question <= 4){
+								nextQuestion(nextPosCode);
 							}else{
-								setCode(inputTable);
+								Alert.alert("코드 찾기 실패!","잘못 입력하였거나, 해당하는 식단표가 없습니다");
+								cancelSetTable();
 								this.stableGoBack();
 							}
 						}}

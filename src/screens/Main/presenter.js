@@ -95,13 +95,11 @@ class Main extends Component{
 		//sort후 day차례대로
 		
 		const foodTable = food.find(elem => elem["code"] == code);
-		let TodayFoodTable = ["해당하는 데이터가 존재하지 않습니다"];
+		let todayFoodTable = ["해당하는 데이터가 존재하지 않습니다"];
 				
-		if(foodTable) TodayFoodTable = foodTable["foodData"].find(elem => {
+		if(foodTable) todayFoodTable = foodTable["foodData"].find(elem => {
 			return elem["date"] === `${year}${this.addZero(month)}${this.addZero(day)}`;
 		})
-		
-
 	
 	const {navigation} = this.props;
 		return(
@@ -146,16 +144,23 @@ class Main extends Component{
 							) : null}
 						</View>
 						<Card style = {{padding:10,width:"95%", borderRadius:10}}>
-							{TodayFoodTable && TodayFoodTable[`${meal}`] ? TodayFoodTable[`${meal}`].map(elem => (
-								<CardItem key = {elem}>
+							{todayFoodTable && todayFoodTable[`${meal}`] ? todayFoodTable[`${meal}`].map(elem => (
+								<CardItem key = {elem+Math.random()}>
 									<Body>
 										<Text style ={{fontSize:23, padding:5, color:this.checkAllergic(elem) ? "#ff7a00" : "black"}}>{elem}</Text>
 									</Body>
 								</CardItem>
 							)) : 
-							<Text>
-								데이터를 불러오는 중입니다...
-							</Text>}
+							<CardItem>
+								<Body>
+									<Text>
+										데이터를 불러오는 중입니다...
+									</Text>
+									<Text>
+										장시간 기다려도 데이터가 나오지 않는 경우, 해당하는 식단표가 없을 수 있습니다.
+									</Text>
+								</Body>
+							</CardItem>}
 						</Card>
 						<View style = {{marginTop:5}}>
 							<Text>현재 제공받는 식단표의 식단코드는 {`${code}`}입니다.</Text>
@@ -177,28 +182,6 @@ class Main extends Component{
 		);
 	}
 }
-
-/*<Modal
-					isVisible = {isSettingMain}
-				>
-					<View style = {{flex:1}}>
-						<TouchableOpacity onPress = {() => {this.props.navigation.navigate('SettingCodeByTable')}}>
-							<Text>식단코드 재설정</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress = {() => {this.props.navigation.navigate("SettingAllergic")}}>
-							<Text>알레르기 재설정</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress = {() => {this.props.navigation.navigate("SettingAllergic")}}>
-							<Text>만든 사람</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress = {() => setShowSetting(false)}>
-							<Text>닫기</Text>
-						</TouchableOpacity>
-					</View>
-				</Modal>	*/
-
-{
-								//TodayFoodTable[meal].map(elem => (<Text>{elem.slice(0,elem.indexOf(" "))}</Text>))
-							}
+							
 
 export default Main;

@@ -21,8 +21,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
 	return {
 		setCode : bindActionCreators(actionCreators.setCode,dispatch),
-		setInputTable : bindActionCreators(actionCreators.setInputCode,dispatch),
-		setPosCode : bindActionCreators(actionCreators.setPosCode,dispatch),
+		setInputTable : bindActionCreators(actionCreators.setInputTable,dispatch),
+		nextQuestion: bindActionCreators(actionCreators.nextQuestion,dispatch),
 		setQuestion : bindActionCreators(actionCreators.setQuestion,dispatch),
 		cancelSetTable : bindActionCreators(actionCreators.cancelSetTable,dispatch),
 		submitSetTable : bindActionCreators(actionCreators.submitSetTable,dispatch)

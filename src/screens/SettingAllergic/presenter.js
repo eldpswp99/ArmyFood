@@ -54,7 +54,7 @@ class SettingAllergic extends Component{
 										<Button bordered = {!posAllergic[allergic.num]}
 										onPress={() => toggleAllergic(allergic.num)}
 											style = {{width:90}}>
-											<Text>{allergic.value}</Text>
+											<Text>{`${allergic.value} (${allergic.num})`}</Text>
 										</Button>
 									</CardItem>
 								))}
@@ -89,8 +89,4 @@ class SettingAllergic extends Component{
 		
 	}
 }
-
-/*<TouchableOpacity key = {"allergic"+allergic.num} onPress={() => toggleAllergic(allergic.num)} style = {styles.elem}>
-										<Text>{allergic.value}</Text>
-									</TouchableOpacity>*/
 export default SettingAllergic;

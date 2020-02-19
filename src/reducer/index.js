@@ -16,10 +16,11 @@ const SUBMIT_ALLERGIC = "SUBMIT_ALLERGIC";
 const CANCEL_ALLERGIC = "CANCEL_ALLERGIC";
 const SET_INPUT_CODE = "SET_INPUT_CODE";
 const SET_INPUT_TABLE = "SET_INPUT_TABLE";
-const SET_POS_CODE = "SET_POS_CODE";
+const NEXT_QUESTION = "NEXT_QUESTION";
 const SET_QUESTION = "SET_QUESTION";
 const CANCEL_SET_TABLE = "CANCEL_SET_TABLE";
 const SUBMIT_SET_TABLE = "SUBMIT_SET_TABLE";
+const NEXT_QUESTION_SET_TABLE = "NEXT_QUESTION_SET_TABLE";
 
 //Action Creators
 
@@ -124,9 +125,9 @@ function setInputTable(inputTable){
 	}
 }
 
-function setPosCode(posCode){
+function nextQuestion(posCode){
 	return{
-		type:SET_POS_CODE,
+		type:NEXT_QUESTION,
 		posCode
 	}
 }
@@ -150,6 +151,7 @@ function submitSetTable(code){
 		code,
 	}
 }
+
 
 
 //Reducer
@@ -315,9 +317,9 @@ function reducer(state = initialState,action){
 		case SET_INPUT_CODE:
 			return applySetInputCode(state,action.inputCode);
 		case SET_INPUT_TABLE:
-			return applySetInputCode(state,action.inputTable);
-		case SET_POS_CODE:
-			return applySetPosCode(state,action.posCode);
+			return applySetInputTable(state,action.inputTable);
+		case NEXT_QUESTION:
+			return applyNextQuestion(state,action.posCode);
 		case SET_QUESTION:
 			return applySetQuestion(state,action.question);
 		case CANCEL_SET_TABLE:
@@ -348,7 +350,8 @@ function applyAddData(state,data){
 function applyLoadEnd(state){
 	return{
 		...state,
-		isLoading:false
+		isLoading:false,
+		posAllergic:state.isAllergic
 	}
 }
 
@@ -455,10 +458,12 @@ function applySetInputTable(state,inputTable){
 	}
 }
 	
-function applySetPosCode(state,posCode){
+function applyNextQuestion(state,posCode){
 	return{
 		...state,
-		posCode
+		posCode,
+		question:state.question+1,
+		inputTable:""
 	}
 }
 	
@@ -513,7 +518,7 @@ const actionCreators = {
 	cancelAllergic,
 	setInputCode,
 	setInputTable,
-	setPosCode,
+	nextQuestion,
 	setQuestion,
 	cancelSetTable,
 	submitSetTable,

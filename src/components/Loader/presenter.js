@@ -40,7 +40,7 @@ setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			
 			try{
-				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/1000`);
+				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/500/1500`);
 						
 			if(!data[`${SERVICE}`] || !data[`${SERVICE}`].row) return null;
 			let curDate = "";
