@@ -4,7 +4,7 @@ import Main from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {code,food,isDatePicker,isLoading,year,month,day,meal,isAllergic,fixYear,fixMonth,fixDay} = state;
+	const {code,food,isDatePicker,isLoading,year,month,day,fixMeal,meal,isAllergic,fixYear,fixMonth,fixDay} = state;
 	
 	return {
 		code,
@@ -18,7 +18,8 @@ function mapStateToProps(state){
 		isAllergic,
 		fixYear,
 		fixMonth,
-		fixDay
+		fixDay,
+		fixMeal
 	}
 }
 
@@ -26,7 +27,8 @@ function mapDispatchToProps(dispatch){
 	return{
 		setDate : bindActionCreators(actionCreators.setDate,dispatch),
 		setShowDatePicker : bindActionCreators(actionCreators.setShowDatePicker,dispatch),
-		nextMeal : bindActionCreators(actionCreators.nextMeal,dispatch)
+		nextMeal : bindActionCreators(actionCreators.nextMeal,dispatch),
+		refresh: bindActionCreators(actionCreators.refresh,dispatch)
 	}
 }
 

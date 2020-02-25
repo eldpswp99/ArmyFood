@@ -5,7 +5,7 @@ import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
 
-	const{inputTable,posCode,allCode,food,question,fixYear,fixMonth} = state;
+	const{inputTable,posCode,allCode,init,food,question,fixYear,fixMonth} = state;
 	
 	return {
 		inputTable,
@@ -14,6 +14,7 @@ function mapStateToProps(state){
 		food,
 		question,
 		fixYear,
+		init,
 		fixMonth,
 	}
 }

@@ -5,8 +5,10 @@ import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
 	
+	const {isLoading} = state;
+	
 	return {
-
+		isLoading
 	}
 }
 

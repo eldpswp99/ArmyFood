@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import { Container,Icon, Button,Header,List,ListItem, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
+import { Container,Footer,Icon, Button,Header,FooterTab,List,ListItem, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
 import {View} from "react-native";
 import { CommonActions } from '@react-navigation/native';
 
@@ -41,49 +41,45 @@ class SettingAllergic extends Component{
 					<Right></Right>
 				</Header>
 				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
-					<Text style = {{padding:20 ,fontSize:24,lineHeight:30}}>
-						체크된 항목에 해당하는 메뉴는 <Text style = {{color:"#ff7a00",fontSize:24,lineHeight:36}}>주황색</Text> 으로 표시됩니다.
+					<Text style = {{paddingHorizontal:20,paddingTop:15 ,fontSize:20,lineHeight:30,}}>
+						체크된 항목에 해당하는 메뉴는 <Text style = {{color:"#ff7a00",fontSize:21,lineHeight:36}}>주황색</Text> 으로 표시됩니다.
 					</Text>
-				<Card style = {{fontSize : 24, height:420, width:"95%"}}>
+				<Card style = {{fontSize : 20, height:310, width:"95%"}}>
 					{tableRow.map(elem => 							
 						(
-							<CardItem key = {"tablerow"+elem} style = {{flexDirection:"row", height: 70}}>
+							<CardItem key = {"tablerow"+elem} style = {{flexDirection:"row", height: 50}}>
 								{allAllergic.slice(elem,elem+3).map(allergic =>
 								(
 									<CardItem key = {"allergic"+allergic.num} style ={{flex:1, justifyContent:"space-around"}}>
 										<Button bordered = {!posAllergic[allergic.num]}
 										onPress={() => toggleAllergic(allergic.num)}
-											style = {{width:90}}>
-											<Text>{`${allergic.value} (${allergic.num})`}</Text>
+											style = {{width:85}} small>
+											<Text>{`${allergic.value}`}</Text>
 										</Button>
 									</CardItem>
 								))}
 							</CardItem>
 						))}
 					</Card >
+					<Button block onPress = {() => {
+						submitAllergic();
+						init ? navigation.dispatch(
+						CommonActions.reset({
+							index: 0,
+							routes: [
+								{
+									name: 'MainDrawer',
+								}
+							],
+						})
+				) :this.stableGoBack();
+					}}>
+						<Text style = {{color:"white",fontSize:15}}>완료</Text>
+					</Button>
+
 					</Content>
-				<View >
-						<Button block onPress = {() => {
-							submitAllergic();
-							init ? navigation.dispatch(
-							CommonActions.reset({
-								index: 0,
-								routes: [
-									{
-										name: 'MainDrawer',
-									}
-								],
-							})
-          ) :this.stableGoBack();
-						}}
-							>
-							<Text>완료</Text>
-						</Button>
-						</View>
-
-
-					
-
+						
+						
 			</Container>
 		)
 		

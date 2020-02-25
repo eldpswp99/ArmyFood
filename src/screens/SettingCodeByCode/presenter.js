@@ -30,7 +30,7 @@ class SettingCodeByCode extends Component{
 					<Right></Right>
 				</Header>
 				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
-					<Text style = {{padding:20 ,fontSize:24,lineHeight:36}}>
+					<Text style = {{padding:20 ,fontSize:20,lineHeight:30}}>
 						제공받을 식단표의 식단코드를 입력해주세요
 					</Text>
 						<Item bordered style = {{width : "90%"}}>

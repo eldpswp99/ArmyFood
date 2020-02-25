@@ -27,10 +27,14 @@
       "supportsTablet": true
     },
     "packagerOpts": {
-      "port": 57425
+      "port": 53321
     },
     "androidStatusBar": {
       "backgroundColor": "#000"
+    },
+    "android": {
+      "package": "com.eldpswp99.foodtable",
+      "versionCode": 1
     }
   }
 }

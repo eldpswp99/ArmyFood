@@ -21,6 +21,8 @@ const SET_QUESTION = "SET_QUESTION";
 const CANCEL_SET_TABLE = "CANCEL_SET_TABLE";
 const SUBMIT_SET_TABLE = "SUBMIT_SET_TABLE";
 const NEXT_QUESTION_SET_TABLE = "NEXT_QUESTION_SET_TABLE";
+const LOAD = "LOAD";
+const REFRESH = "REFRESH";
 
 //Action Creators
 
@@ -61,6 +63,16 @@ function setDate(year,month,day,isDatePicker){
 		month,
 		day,
 		isDatePicker
+	}
+}
+
+function load(year,month,day,meal){
+	return{
+		type:LOAD,
+		year,
+		month,
+		day,
+		meal
 	}
 }
 
@@ -152,7 +164,11 @@ function submitSetTable(code){
 	}
 }
 
-
+function refresh(){
+	return{
+		type:REFRESH
+	}
+}
 
 //Reducer
 
@@ -279,6 +295,7 @@ const initialState = {
 	fixYear:2020,
 	fixMonth:2,
 	fixDay:5,
+	fixMeal:"brst",
 	meal:"brst",
 	isDatePicker:false,
 	isSettingMain:false,
@@ -326,6 +343,10 @@ function reducer(state = initialState,action){
 			return applyCancelSetTable(state);
 		case SUBMIT_SET_TABLE:
 			return applySubmitSetTable(state,action.code);
+		case LOAD:
+			return applyLoad(state,action.year,action.month,action.day,action.meal);
+		case REFRESH:
+			return applyRefresh(state);
 		default :
 			return state;
 	}
@@ -478,7 +499,7 @@ function applyCancelSetTable(state){
 	return{
 		...state,
 		inputTable:"",
-		pos:state.allCode,
+		posCode:state.allCode,
 		question:1
 	}
 }
@@ -488,7 +509,7 @@ function applySubmitSetTable(state,code){
 		...state,
 		code,
 		inputTable:"",
-		pos:state.allCode,
+		posCode:state.allCode,
 		question:1,
 		
 	}
@@ -498,6 +519,30 @@ function applySetInit(state,init){
 	return{
 		...state,
 		init
+	}
+}
+	
+function applyLoad(state,year,month,day,meal){
+	return{
+		...state,
+		fixYear:year,
+		fixMonth:month,
+		fixDay:day,
+		fixMeal:meal,
+		meal,
+		year,
+		month,
+		day
+	}
+}
+	
+function applyRefresh(state){
+	return{
+		...state,
+		year:state.fixYear,
+		month:state.fixMonth,
+		day:state.fixDay,
+		meal:state.fixMeal
 	}
 }
 
@@ -522,6 +567,8 @@ const actionCreators = {
 	setQuestion,
 	cancelSetTable,
 	submitSetTable,
+	load,
+	refresh
 };
 
 export {actionCreators};

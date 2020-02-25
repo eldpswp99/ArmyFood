@@ -52,6 +52,8 @@ class Main extends Component{
 		return `(${sign}${dayDiff})`;
 	}
 	render(){
+		
+		
 		let colorScheme = Appearance.getColorScheme();
 		let darkMode = colorScheme === 'dark';
 				
@@ -72,6 +74,8 @@ class Main extends Component{
 			fixYear,
 			fixMonth,
 			fixDay,
+			fixMeal,
+			refresh
 		} = this.props;
 		
 		if(isLoading) return <Loader/>;
@@ -80,7 +84,7 @@ class Main extends Component{
 		const curDate = new Date(year,month-1,day);
 		const fixDate = new Date(fixYear,fixMonth-1,fixDay);
 	
-		switch(meal){
+		switch(meal){ 
 			case "brst":
 				mealVal="아침";
 				break;
@@ -116,7 +120,7 @@ class Main extends Component{
 							<Title>오늘의 짬</Title>	
 						</Body>
 						<Right>
-							<Button transparent onPress = {() => setDate(fixYear,fixMonth,fixDay,false)}>
+							<Button transparent onPress = {() => refresh()}>
 								 <Icon name='md-refresh' style = {{fontSize : 27}}/>
 							</Button>
 							<Button transparent onPress = {() => setShowDatePicker(true)}>
@@ -147,7 +151,7 @@ class Main extends Component{
 							{todayFoodTable && todayFoodTable[`${meal}`] ? todayFoodTable[`${meal}`].map(elem => (
 								<CardItem key = {elem+Math.random()}>
 									<Body>
-										<Text style ={{fontSize:23, padding:5, color:this.checkAllergic(elem) ? "#ff7a00" : "black"}}>{elem}</Text>
+										<Text style ={{fontSize:20, padding:0, color:this.checkAllergic(elem) ? "#ff7a00" : "black"}}>{elem}</Text>
 									</Body>
 								</CardItem>
 							)) : 
@@ -170,8 +174,8 @@ class Main extends Component{
 								mode = "date"
 								onConfirm = {date => setDate(date.getFullYear(),date.getMonth()+1,date.getDate(),false)}
 								onCancel = {() => setShowDatePicker(false)} 
-								maximumDate={fixDate.getTime() + MONTH}
-								minimumDate={fixDate.getTime() - MONTH}
+								maximumDate={fixDate.getTime() + DAY*3}
+								minimumDate={fixDate.getTime() - DAY*3}
 								isDarkModeEnabled = {darkMode}
 							/>
 					</Content>	

@@ -9,8 +9,7 @@ class Loader extends Component{
 	
 	getData = () => {
 		let mealDate = new Date();
-		const {setFixDate,setDate,setMeal,allCode,addData,loadEnd,food} = this.props;
-		setFixDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate());		
+		const {load,allCode,addData,loadEnd,food} = this.props;
 		const hour = mealDate.getHours();
 		let meal = "brst";
 		if(9 <= hour&& hour <= 12) meal = "lunc";
@@ -19,8 +18,7 @@ class Loader extends Component{
 			mealDate = new Date(mealDate.getTime() + DAY);
 		}
 		
-setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
-		
+		load(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),meal);
 		
 		//데이터파싱필요
 		/*
@@ -29,7 +27,6 @@ setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
 				foodData:[
 					{
 						date:"20201212"
-						brst:[array of String]
 						lunc:[array of String]
 						dinr:[array of String]
 					}
@@ -40,7 +37,7 @@ setDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),false);
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			
 			try{
-				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/500/1500`);
+				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/2000`);
 						
 			if(!data[`${SERVICE}`] || !data[`${SERVICE}`].row) return null;
 			let curDate = "";

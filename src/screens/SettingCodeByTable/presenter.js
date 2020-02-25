@@ -54,10 +54,13 @@ class SettingCodeByTable extends Component{
 			fixMonth,
 			setInputTable,
 			cancelSetTable,
-			submitSetTable
+			submitSetTable,
+			nextQuestion,
+			init
 		} = this.props;
 		const {navigation} = this.props;
 		const {index} = navigation.dangerouslyGetState();
+		
 		
 		return(
 			<Container>
@@ -75,11 +78,11 @@ class SettingCodeByTable extends Component{
 					<Right></Right>
 				</Header>
 				<Content contentContainerStyle={{ alignItems: 'center', flex: 1 }}>
-					<Text style = {{padding:20 ,fontSize:24,lineHeight:36}}>
+					<Text style = {{paddingHorizontal:20,paddingTop:20 ,fontSize:20,lineHeight:30}}>
 						주어진 질문에 대한 답을 정확히 적어주세요<Text style = {{paddingLeft : 15,fontSize:12,lineHeight:36}}>  남은 후보:<Text style = {{fontSize:12,lineHeight:36,color:"red"}}>{posCode.length}</Text>개</Text>
 					</Text>
-					<Text style = {{padding:20,paddingTop:0 ,fontSize:26,lineHeight:36}}>
-						Q{question} : {fixYear}년 {fixMonth}월 {question}일의 점심 메뉴 중 하나를 정확히 입력하세요 (밥 제외) 
+					<Text style = {{paddingHorizontal:20 ,fontSize:20,lineHeight:30}}>
+						Q{question} : {fixYear}년 {fixMonth}월 {question}일의 <Text style = {{fontSize:23, color:"red"}}>점심</Text> 메뉴 중 하나를 정확히 입력하세요 (밥 제외) 
 					</Text>
 						<Item bordered style = {{width : "90%"}}>
 							<Input placeholder = "메뉴 입력"
@@ -89,13 +92,13 @@ class SettingCodeByTable extends Component{
 								<Icon type = "MaterialIcons" name='cancel'/>
 							</Button>
 						</Item>
-					<Button style = {{marginTop:20}} block onPress = {() => {
+					<Button style = {{marginTop:10}} block onPress = {() => {
 							const nextPosCode = this.nextPos(inputTable);
 							
 							if(nextPosCode.length === 1){
 								Alert.alert("코드 설정 완료!",`해당하는 식단코드는 ${nextPosCode[0]} 입니다`);
 								submitSetTable(nextPosCode[0]);
-								this.stableGoBack();
+								init ? navigation.navigate("SettingAllergic") : this.stableGoBack();
 							}else if(nextPosCode.length > 1 && question <= 4){
 								nextQuestion(nextPosCode);
 							}else{
