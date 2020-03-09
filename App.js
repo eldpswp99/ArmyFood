@@ -54,13 +54,13 @@ export default class App extends React.Component {
 	  <Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<NavigationContainer>
-						<Stack.Navigator headerMode = "none" initialRouteName = {store.getState().init === true ? "Init" : "MainDrawer"}>
-							<Stack.Screen name = "Init" component = {Init}/>
-							<Stack.Screen name = "SettingAllergic" component = {SettingAllergic}/>
-							<Stack.Screen name = "SettingCodeByTable" component = {SettingCodeByTable}/>
-							<Stack.Screen name = "SettingCodeByCode" component = {SettingCodeByCode}/>
-							<Stack.Screen name = "MainDrawer" component = {MainDrawer} />
-						</Stack.Navigator>										
+					<Stack.Navigator headerMode = "none" initialRouteName = {store.getState().init === true ? "Init" : "MainDrawer"}>
+						<Stack.Screen name = "Init" component = {Init}/>
+						<Stack.Screen name = "SettingAllergic" component = {SettingAllergic}/>
+						<Stack.Screen name = "SettingCodeByTable" component = {SettingCodeByTable}/>
+						<Stack.Screen name = "SettingCodeByCode" component = {SettingCodeByCode}/>
+						<Stack.Screen name = "MainDrawer" component = {MainDrawer} />
+					</Stack.Navigator>										
 				</NavigationContainer>
 			</PersistGate>
 	  </Provider>

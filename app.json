@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "foodTable",
+    "name": "오늘의 짬",
     "slug": "foodTable",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -27,7 +27,7 @@
       "supportsTablet": true
     },
     "packagerOpts": {
-      "port": 53321
+      "port": 59048
     },
     "androidStatusBar": {
       "backgroundColor": "#000"

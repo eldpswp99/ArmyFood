@@ -7,7 +7,7 @@ import {KEY} from "react-native-dotenv";
 
 class Loader extends Component{
 	
-	getData = () => {
+	getData = async () => {
 		let mealDate = new Date();
 		const {load,allCode,addData,loadEnd,food} = this.props;
 		const hour = mealDate.getHours();
@@ -33,11 +33,11 @@ class Loader extends Component{
 				]
 			}
 		*/
-			allCode.map(async (code) => {	
+			await allCode.map(async (code) => {	
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			
 			try{
-				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/2000`);
+				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/3000`);
 						
 			if(!data[`${SERVICE}`] || !data[`${SERVICE}`].row) return null;
 			let curDate = "";
@@ -75,8 +75,6 @@ class Loader extends Component{
 				console.error(error);		
 			}
 			
-			
-			
 		})
 	
 		loadEnd();
@@ -87,6 +85,7 @@ class Loader extends Component{
 	}
 	
 	render(){
+		
 		return(
 			<View style={{ alignItems: 'center',justifyContent : "center",height:"100%",backgroundColor:"white"}}>
 				<Image source={require('../../../assets/images/K02.png')} style={{width:100,height:100}}/>
