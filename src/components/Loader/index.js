@@ -4,10 +4,11 @@ import Loader from "./presenter";
 import {actionCreators} from "../../reducer";
 
 function mapStateToProps(state){
-	const {allCode} = state;
+	const {allCode,fixDay} = state;
 	
 	return {
-		allCode
+		allCode,
+		fixDay
 	}
 }
 
@@ -16,6 +17,7 @@ function mapDispatchToProps(dispatch){
 		addData : bindActionCreators(actionCreators.addData,dispatch),
 		loadEnd : bindActionCreators(actionCreators.loadEnd,dispatch),
 		load :bindActionCreators(actionCreators.load,dispatch),
+		setFixDate:bindActionCreators(actionCreators.setFixDate,dispatch)
 	}
 }
 

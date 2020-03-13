@@ -9,8 +9,10 @@ class Loader extends Component{
 	
 	getData = async () => {
 		let mealDate = new Date();
-		const {load,allCode,addData,loadEnd,food} = this.props;
+		const {setFixDate,load,allCode,addData,loadEnd,food,fixDay} = this.props;
 		const hour = mealDate.getHours();
+		
+		setFixDate(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate());
 		let meal = "brst";
 		if(9 <= hour&& hour <= 12) meal = "lunc";
 		else if(13 <= hour && hour<= 18) meal = "dinr";
@@ -27,6 +29,7 @@ class Loader extends Component{
 				foodData:[
 					{
 						date:"20201212"
+						brst:[array of String]
 						lunc:[array of String]
 						dinr:[array of String]
 					}
@@ -37,17 +40,19 @@ class Loader extends Component{
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			
 			try{
-				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/3000`);
+				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/4000`);
 						
 			if(!data[`${SERVICE}`] || !data[`${SERVICE}`].row) return null;
 			let curDate = "";
 			let tempbrst = [];
 			let templunc = [];
 			let tempdinr = [];
+			let cnt = 0;
 			let codeFoodTable = [];
+				
 			data[`${SERVICE}`].row.map(elem => {
-				if(elem["dates"] !== ""){
-					if(curDate !== ""){
+				if(elem["dates"] !== "" || cnt > 7 || (cnt >= 3 && elem["adspcfd"])){
+					if(curDate !== "" && cnt >1){
 						codeFoodTable = codeFoodTable.concat({
 							date:curDate,
 							brst:tempbrst,
@@ -56,12 +61,27 @@ class Loader extends Component{
 						})
 					}
 					
+					cnt = 0;
 					curDate = elem["dates"];
 					tempbrst = tempdinr = templunc = [];
 				} 
 				
 				if(curDate === "") return null;			
+				if(elem["adspcfd"] !== "" && elem["adspcfd"]){
+					switch(cnt){
+						case 0:
+							tempbrst = tempbrst.concat(elem["adspcfd"]);
+							break;
+						case 1:
+							templunc = templunc.concat(elem["adspcfd"]);
+							break;
+						case 2:
+							tempdinr = tempdinr.concat(elem["adspcfd"]);
+							break;
+					}
+				}
 				
+				cnt++;
 				if(elem["brst"] !== "") tempbrst = tempbrst.concat(elem["brst"]);
 				if(elem["lunc"] !== "") templunc = templunc.concat(elem["lunc"]);
 				if(elem["dinr"] !== "") tempdinr = tempdinr.concat(elem["dinr"]);

@@ -100,10 +100,18 @@ class Main extends Component{
 		
 		const foodTable = food.find(elem => elem["code"] == code);
 		let todayFoodTable = ["해당하는 데이터가 존재하지 않습니다"];
-				
-		if(foodTable) todayFoodTable = foodTable["foodData"].find(elem => {
+		let todayFoodTableCand = null;		
+		if(foodTable) todayFoodTableCand = foodTable["foodData"].filter(elem => {
 			return elem["date"] === `${year}${this.addZero(month)}${this.addZero(day)}`;
 		})
+		
+		if(todayFoodTableCand && todayFoodTableCand.length > 0) {
+			todayFoodTable = todayFoodTableCand.reduce((previous,current) => {
+				if(previous["brst"].length >= 3) return previous;
+				
+				return previous["brst"].length >= current["brst"].length ? previous : current;
+			})
+		}
 	
 	const {navigation} = this.props;
 		return(
@@ -130,7 +138,7 @@ class Main extends Component{
 					</Header>	
 					<Content contentContainerStyle={{ alignItems: 'center'}}> 
 						<View style = {{flexDirection:"row",alignItems:"center",justifyContent:"center", margin:5,marginTop:10}}>
-							{(fixDate.getTime()-DAY*3 < curDate.getTime()) ? (
+							{(fixDate.getTime()-MONTH < curDate.getTime()) ? (
 								<Button transparent onPress = {() => this.setDatebyDateInstance(this.afterDay(-1))}>
 									<Icon type = "Entypo" name = "controller-fast-backward" />
 								</Button>
@@ -141,7 +149,7 @@ class Main extends Component{
 							<Button bordered dark onPress = {() => nextMeal(meal)}  style = {{borderRadius:7}}>
 								<Text style = {{fontSize:20}}>{mealVal}</Text>
 							</Button>
-							{fixDate.getTime()+DAY*3 > curDate.getTime() ? (
+							{fixDate.getTime()+MONTH > curDate.getTime() ? (
 								<Button transparent onPress = {() => this.setDatebyDateInstance(this.afterDay(1))}>
 									<Icon type = "Entypo" name = "controller-fast-forward" />
 								</Button>
@@ -178,8 +186,8 @@ class Main extends Component{
 								mode = "date"
 								onConfirm = {date => setDate(date.getFullYear(),date.getMonth()+1,date.getDate(),false)}
 								onCancel = {() => setShowDatePicker(false)} 
-								maximumDate={fixDate.getTime() + DAY*3}
-								minimumDate={fixDate.getTime() - DAY*3}
+								maximumDate={fixDate.getTime() + MONTH}
+								minimumDate={fixDate.getTime() - MONTH}
 								isDarkModeEnabled = {darkMode}
 							/>
 					</Content>	

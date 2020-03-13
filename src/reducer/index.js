@@ -47,12 +47,12 @@ function loadEnd(){
 	}
 }
 
-function setFixDate(year,month,day){
+function setFixDate(fixYear,fixMonth,fixDay){
 	return{
 		type:SET_FIX_DATE,
-		year,
-		month,
-		day
+		fixYear,
+		fixMonth,
+		fixDay,
 	}
 }
 
@@ -316,7 +316,7 @@ function reducer(state = initialState,action){
 		case SET_DATE:
 			return applySetDate(state,action.year,action.month,action.day,action.isDatePicker);
 		case SET_FIX_DATE:
-			return applySetFixDate(state,action.year,action.month,action.day);
+			return applySetFixDate(state,action.fixYear,action.fixMonth,action.fixDay);
 		case SET_MEAL:
 			return applySetMeal(state,action.meal);
 		case NEXT_MEAL:
@@ -525,9 +525,6 @@ function applySetInit(state,init){
 function applyLoad(state,year,month,day,meal){
 	return{
 		...state,
-		fixYear:year,
-		fixMonth:month,
-		fixDay:day,
 		fixMeal:meal,
 		meal,
 		year,
