@@ -51,7 +51,7 @@ class Loader extends Component{
 			let codeFoodTable = [];
 				
 			data[`${SERVICE}`].row.map(elem => {
-				if(elem["dates"] !== "" || cnt > 7 || (cnt >= 3 && elem["adspcfd"])){
+				if(elem["dates"] !== "" || cnt > 7 || (cnt >= 3 && elem["adspcfd"]) || (!elem["brst"] && !elem["lunc"] && !elem["dinr"])){
 					if(curDate !== "" && cnt >1){
 						codeFoodTable = codeFoodTable.concat({
 							date:curDate,

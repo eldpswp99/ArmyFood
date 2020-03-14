@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.1.2",
+    "version": "1.1.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -27,14 +27,14 @@
       "supportsTablet": true
     },
     "packagerOpts": {
-      "port": 55694
+      "port": 50718
     },
     "androidStatusBar": {
       "backgroundColor": "#000"
     },
     "android": {
       "package": "com.eldpswp99.foodtable",
-      "versionCode": 4
+      "versionCode": 5
     }
   }
 }

@@ -107,7 +107,7 @@ class Main extends Component{
 		
 		if(todayFoodTableCand && todayFoodTableCand.length > 0) {
 			todayFoodTable = todayFoodTableCand.reduce((previous,current) => {
-				if(previous["brst"].length >= 3) return previous;
+				if(previous["brst"].length >= 4) return previous;
 				
 				return previous["brst"].length >= current["brst"].length ? previous : current;
 			})
