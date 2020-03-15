@@ -174,7 +174,6 @@ class Main extends Component{
 										장시간 기다려도 식단이 나오지 않는 경우,
 										식단표가 업로드되지 않았을 수 있습니다.
 									</Text>
-										
 								</Body>
 							</CardItem>}
 						</Card>
@@ -190,6 +189,7 @@ class Main extends Component{
 								minimumDate={fixDate.getTime() - MONTH}
 								isDarkModeEnabled = {darkMode}
 							/>
+						
 					</Content>	
 				
 					

@@ -36,7 +36,7 @@ class Loader extends Component{
 				]
 			}
 		*/
-			await allCode.map(async (code) => {	
+			 allCode.map(async (code) => {	
 			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
 			
 			try{
