@@ -1,33 +1,39 @@
 import { connect } from "react-redux";
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import SettingCodeByTable from "./presenter";
-import {actionCreators} from "../../reducer";
+import { actionCreators } from "../../reducer";
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
+  const {
+    inputTable,
+    posCode,
+    allCode,
+    init,
+    question,
+    fixYear,
+    fixMonth,
+  } = state;
 
-	const{inputTable,posCode,allCode,init,food,question,fixYear,fixMonth} = state;
-	
-	return {
-		inputTable,
-		allCode,
-		posCode,
-		food,
-		question,
-		fixYear,
-		init,
-		fixMonth,
-	}
+  return {
+    inputTable,
+    allCode,
+    posCode,
+    question,
+    fixYear,
+    init,
+    fixMonth,
+  };
 }
 
-function mapDispatchToProps(dispatch){
-	return {
-		setCode : bindActionCreators(actionCreators.setCode,dispatch),
-		setInputTable : bindActionCreators(actionCreators.setInputTable,dispatch),
-		nextQuestion: bindActionCreators(actionCreators.nextQuestion,dispatch),
-		setQuestion : bindActionCreators(actionCreators.setQuestion,dispatch),
-		cancelSetTable : bindActionCreators(actionCreators.cancelSetTable,dispatch),
-		submitSetTable : bindActionCreators(actionCreators.submitSetTable,dispatch)
-	}
+function mapDispatchToProps(dispatch) {
+  return {
+    setCode: bindActionCreators(actionCreators.setCode, dispatch),
+    setInputTable: bindActionCreators(actionCreators.setInputTable, dispatch),
+    nextQuestion: bindActionCreators(actionCreators.nextQuestion, dispatch),
+    setQuestion: bindActionCreators(actionCreators.setQuestion, dispatch),
+    cancelSetTable: bindActionCreators(actionCreators.cancelSetTable, dispatch),
+    submitSetTable: bindActionCreators(actionCreators.submitSetTable, dispatch),
+  };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SettingCodeByTable);
+export default connect(mapStateToProps, mapDispatchToProps)(SettingCodeByTable);
