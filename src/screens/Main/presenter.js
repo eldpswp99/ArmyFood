@@ -3,7 +3,9 @@ import React,{Component} from "react";
 import { Container,Icon, Button,Header, Content,Title, Text ,Left,Right,Body,Card,CardItem} from 'native-base';
 import {View,Platform,StyleSheet,StatusBar} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import axios from "axios";
 import { Appearance } from 'react-native-appearance';
+import {API_ADDRESS} from "react-native-dotenv"
 
 import {DAY,MONTH} from "../../Enums";
 import Loader from "../../components/Loader";
@@ -51,7 +53,7 @@ class Main extends Component{
 		const sign = dayDiff > 0 ? "+" : "";
 		return `(${sign}${dayDiff})`;
 	}
-	render(){
+	async render(){
 		
 		
 		let colorScheme = Appearance.getColorScheme();
@@ -100,19 +102,9 @@ class Main extends Component{
 		
 		const foodTable = food.find(elem => elem["code"] == code);
 		let todayFoodTable = ["해당하는 데이터가 존재하지 않습니다"];
-		let todayFoodTableCand = null;		
-		if(foodTable) todayFoodTableCand = foodTable["foodData"].filter(elem => {
-			return elem["date"] === `${year}${this.addZero(month)}${this.addZero(day)}`;
-		})
+		const temptodayFoodTable = await axios.get(`${API_ADDRESS}/${code}/${year}${this.addZero(month)}${this.addZero(day)}/${meal}`).data[`${meal}`];
+		console.log(temptodayFoodTable);
 		
-		if(todayFoodTableCand && todayFoodTableCand.length > 0) {
-			todayFoodTable = todayFoodTableCand.reduce((previous,current) => {
-				if(previous["brst"].length >= 4) return previous;
-				
-				return previous["brst"].length >= current["brst"].length ? previous : current;
-			})
-		}
-	
 	const {navigation} = this.props;
 		return(
 				<Container>

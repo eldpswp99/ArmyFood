@@ -3,7 +3,7 @@ import { Container,Icon, Button,Text } from 'native-base';
 import { Image ,View} from 'react-native';
 import axios from "axios";
 import {DAY} from "../../Enums";
-import {KEY} from "react-native-dotenv";
+
 
 class Loader extends Component{
 	
@@ -21,81 +21,6 @@ class Loader extends Component{
 		}
 		
 		load(mealDate.getFullYear(),mealDate.getMonth()+1,mealDate.getDate(),meal);
-		
-		//데이터파싱필요
-		/*
-			{
-				code,
-				foodData:[
-					{
-						date:"20201212"
-						brst:[array of String]
-						lunc:[array of String]
-						dinr:[array of String]
-					}
-				]
-			}
-		*/
-			 allCode.map(async (code) => {	
-			const SERVICE = "DS_TB_MNDT_DATEBYMLSVC" + (code === "3333" ? "" : "_" + code);
-			
-			try{
-				const {data} = await axios.get(`http://openapi.mnd.go.kr/${KEY}/json/${SERVICE}/1/4000`);
-						
-			if(!data[`${SERVICE}`] || !data[`${SERVICE}`].row) return null;
-			let curDate = "";
-			let tempbrst = [];
-			let templunc = [];
-			let tempdinr = [];
-			let cnt = 0;
-			let codeFoodTable = [];
-				
-			data[`${SERVICE}`].row.map(elem => {
-				if(elem["dates"] !== "" || cnt > 7 || (cnt >= 3 && elem["adspcfd"]) || (!elem["brst"] && !elem["lunc"] && !elem["dinr"])){
-					if(curDate !== "" && cnt >1){
-						codeFoodTable = codeFoodTable.concat({
-							date:curDate,
-							brst:tempbrst,
-							lunc:templunc,
-							dinr:tempdinr
-						})
-					}
-					
-					cnt = 0;
-					curDate = elem["dates"];
-					tempbrst = tempdinr = templunc = [];
-				} 
-				
-				if(curDate === "") return null;			
-				if(elem["adspcfd"] !== "" && elem["adspcfd"]){
-					switch(cnt){
-						case 0:
-							tempbrst = tempbrst.concat(elem["adspcfd"]);
-							break;
-						case 1:
-							templunc = templunc.concat(elem["adspcfd"]);
-							break;
-						case 2:
-							tempdinr = tempdinr.concat(elem["adspcfd"]);
-							break;
-					}
-				}
-				
-				cnt++;
-				if(elem["brst"] !== "") tempbrst = tempbrst.concat(elem["brst"]);
-				if(elem["lunc"] !== "") templunc = templunc.concat(elem["lunc"]);
-				if(elem["dinr"] !== "") tempdinr = tempdinr.concat(elem["dinr"]);
-			})
-			addData({
-				code,
-				foodData:codeFoodTable
-			});
-				
-			}catch(error){
-				console.error(error);		
-			}
-			
-		})
 	
 		loadEnd();
 	}
