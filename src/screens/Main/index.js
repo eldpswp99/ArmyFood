@@ -46,7 +46,7 @@ function mapDispatchToProps(dispatch) {
     ),
     nextMeal: bindActionCreators(actionCreators.nextMeal, dispatch),
     refresh: bindActionCreators(actionCreators.refresh, dispatch),
-    // setTable: bindActionCreators(actionCreators.setTable, dispatch),
+    setTable: bindActionCreators(actionCreators.setTable, dispatch),
   };
 }
 

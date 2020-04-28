@@ -13,6 +13,7 @@ npm-debug.*
 web-build/
 web-report/
 assets
+.exprc
 
 # macOS
 .DS_Store
