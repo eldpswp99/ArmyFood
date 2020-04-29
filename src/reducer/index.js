@@ -418,27 +418,6 @@ function applySetMeal(state, meal) {
   };
 }
 
-function applyNextMeal(state, meal) {
-  let nextmeal;
-
-  switch (meal) {
-    case "brst":
-      nextmeal = "lunc";
-      break;
-    case "lunc":
-      nextmeal = "dinr";
-      break;
-    case "dinr":
-      nextmeal = "brst";
-      break;
-  }
-
-  return {
-    ...state,
-    meal: nextmeal,
-  };
-}
-
 function applySetShowDatePicker(state, isDatePicker) {
   return {
     ...state,

@@ -12,6 +12,10 @@ function mapStateToProps(state) {
     question,
     fixYear,
     fixMonth,
+    year,
+    month,
+    day,
+    meal,
   } = state;
 
   return {
@@ -22,6 +26,10 @@ function mapStateToProps(state) {
     fixYear,
     init,
     fixMonth,
+    year,
+    month,
+    day,
+    meal,
   };
 }
 
@@ -33,6 +41,7 @@ function mapDispatchToProps(dispatch) {
     setQuestion: bindActionCreators(actionCreators.setQuestion, dispatch),
     cancelSetTable: bindActionCreators(actionCreators.cancelSetTable, dispatch),
     submitSetTable: bindActionCreators(actionCreators.submitSetTable, dispatch),
+    setTable: bindActionCreators(actionCreators.setTable, dispatch),
   };
 }
 

@@ -20,6 +20,7 @@ import {
 import { View, Platform, StyleSheet, StatusBar, Alert } from "react-native";
 import * as Enums from "../../Enums";
 import { API_ADDRESS } from "react-native-dotenv";
+import debounce from "lodash.debounce";
 
 class SettingCodeByTable extends Component {
   addZero(elem) {
@@ -33,7 +34,7 @@ class SettingCodeByTable extends Component {
   }
 
   async nextPos(prevPos, input, date) {
-    const { data } = await axios.get(`http://172.30.1.3:8005/setcode`, {
+    const { data } = await axios.get(`${API_ADDRESS}/setcode`, {
       params: {
         input,
         date,
@@ -42,6 +43,31 @@ class SettingCodeByTable extends Component {
     });
 
     return data;
+  }
+
+  async getTable(code, date, type) {
+    try {
+      let food = (await axios.get(`${API_ADDRESS}/${code}/${date}/${type}`))
+        .data;
+
+      food = food ? food[`${type}`] : null;
+
+      const { setTable } = this.props;
+
+      setTable(food);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  addZero(elem) {
+    return elem < 10 ? "0" + elem : elem;
+  }
+
+  dateToString(date) {
+    return `${date.getFullYear()}${this.addZero(
+      date.getMonth() + 1
+    )}${this.addZero(date.getDate())}`;
   }
 
   render() {
@@ -57,9 +83,14 @@ class SettingCodeByTable extends Component {
       submitSetTable,
       nextQuestion,
       init,
+      year,
+      month,
+      day,
+      meal,
     } = this.props;
     const { navigation } = this.props;
     const { index } = navigation.dangerouslyGetState();
+    let alreadyNavigated = false;
 
     return (
       <Container>
@@ -117,26 +148,31 @@ class SettingCodeByTable extends Component {
           <Button
             style={{ marginTop: 10 }}
             block
-            onPress={async () => {
+            disabled={inputTable === ""}
+            onPress={debounce(async () => {
               const nextPosCode = await this.nextPos(
                 posCode,
                 inputTable,
-                `${fixYear}${this.addZero(fixMonth)}0${question}`
+                this.dateToString(new Date(fixYear, fixMonth - 1, question))
               );
 
-              console.log(nextPosCode);
               if (nextPosCode.length === 1) {
                 Alert.alert(
                   "코드 설정 완료!",
                   `해당하는 식단코드는 ${nextPosCode[0]} 입니다`
                 );
+                this.getTable(
+                  nextPosCode[0],
+                  this.dateToString(new Date(year, month - 1, day)),
+                  meal
+                );
                 submitSetTable(nextPosCode[0]);
                 init
                   ? navigation.navigate("SettingAllergic")
                   : this.stableGoBack();
-              } else if (nextPosCode.length > 1 && question <= 2) {
+              } else if (nextPosCode.length > 1 && question <= 3) {
                 nextQuestion(nextPosCode);
-              } else if (question > 2 && nextPosCode.length == 2) {
+              } else if (question > 3 && nextPosCode.length == 2) {
                 Alert.alert(
                   "2020년 4월 공지",
                   "올바르게 입력했는데도 계속해서 후보 2개만 남는다면, 코드는 6335 또는 2171입니다. 현재 두 코드의 식단표가 동일합니다. 두 코드 중의 하나를 입력해서 사용하고, 추후 맞지 않는 경우 다른 코드로 사용하세요."
@@ -151,7 +187,7 @@ class SettingCodeByTable extends Component {
                 cancelSetTable();
                 this.stableGoBack();
               }
-            }}
+            }, 200)}
           >
             <Text>다음</Text>
           </Button>

@@ -17,9 +17,11 @@ import {
 import { View, Platform, StyleSheet, StatusBar } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Appearance } from "react-native-appearance";
+import axios from "axios";
 
 import { DAY, MONTH } from "../../Enums";
 import Loader from "../../components/Loader";
+import { API_ADDRESS } from "react-native-dotenv";
 
 class Main extends Component {
   addZero(elem) {
@@ -67,14 +69,58 @@ class Main extends Component {
     return `(${sign}${dayDiff})`;
   }
 
+  dateToString(date) {
+    return `${date.getFullYear()}${this.addZero(
+      date.getMonth() + 1
+    )}${this.addZero(date.getDate())}`;
+  }
+
+  async getTable(code, date, type) {
+    try {
+      let food = (await axios.get(`${API_ADDRESS}/${code}/${date}/${type}`))
+        .data;
+
+      food = food ? food[`${type}`] : null;
+
+      const { setTable } = this.props;
+
+      setTable(food);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  nextMeal(meal) {
+    let nextmeal;
+    switch (meal) {
+      case "brst":
+        nextmeal = "lunc";
+        break;
+      case "lunc":
+        nextmeal = "dinr";
+        break;
+      case "dinr":
+        nextmeal = "brst";
+        break;
+    }
+
+    return nextmeal;
+  }
+
+  componentDidMount() {
+    const { code, year, month, day, meal } = this.props;
+    this.getTable(code, this.dateToString(new Date()), `${meal}`);
+  }
+
   render() {
     let colorScheme = Appearance.getColorScheme();
     let darkMode = colorScheme === "dark";
 
     const {
       code,
-      food,
+      table,
       isLoading,
+      setMeal,
       setDate,
       setShowDatePicker,
       isDatePicker,
@@ -82,9 +128,6 @@ class Main extends Component {
       month,
       day,
       meal,
-      isSettingMain,
-      isAllergic,
-      nextMeal,
       fixYear,
       fixMonth,
       fixDay,
@@ -110,7 +153,6 @@ class Main extends Component {
         break;
     }
 
-    let todayFoodTable = ["해당하는 데이터가 존재하지 않습니다"];
     const { navigation } = this.props;
     return (
       <Container>
@@ -124,7 +166,17 @@ class Main extends Component {
             <Title>오늘의 짬</Title>
           </Body>
           <Right>
-            <Button transparent onPress={() => refresh()}>
+            <Button
+              transparent
+              onPress={() => {
+                this.getTable(
+                  code,
+                  this.dateToString(new Date(fixYear, fixMonth - 1, fixDay)),
+                  fixMeal
+                );
+                refresh();
+              }}
+            >
               <Icon name="md-refresh" style={{ fontSize: 27 }} />
             </Button>
             <Button transparent onPress={() => setShowDatePicker(true)}>
@@ -145,7 +197,12 @@ class Main extends Component {
             {fixDate.getTime() - MONTH < curDate.getTime() ? (
               <Button
                 transparent
-                onPress={() => this.setDatebyDateInstance(this.afterDay(-1))}
+                onPress={() => {
+                  const prevDay = this.afterDay(-1);
+                  this.getTable(code, this.dateToString(prevDay), meal);
+
+                  this.setDatebyDateInstance(prevDay);
+                }}
               >
                 <Icon type="Entypo" name="controller-fast-backward" />
               </Button>
@@ -159,7 +216,14 @@ class Main extends Component {
             <Button
               bordered
               dark
-              onPress={() => nextMeal(meal)}
+              onPress={() => {
+                this.getTable(
+                  code,
+                  this.dateToString(new Date(year, month - 1, day)),
+                  this.nextMeal(meal)
+                );
+                setMeal(this.nextMeal(meal));
+              }}
               style={{ borderRadius: 7 }}
             >
               <Text style={{ fontSize: 20 }}>{mealVal}</Text>
@@ -167,15 +231,19 @@ class Main extends Component {
             {fixDate.getTime() + MONTH > curDate.getTime() ? (
               <Button
                 transparent
-                onPress={() => this.setDatebyDateInstance(this.afterDay(1))}
+                onPress={() => {
+                  const postDay = this.afterDay(1);
+                  this.getTable(code, this.dateToString(postDay), meal);
+                  this.setDatebyDateInstance(postDay);
+                }}
               >
                 <Icon type="Entypo" name="controller-fast-forward" />
               </Button>
             ) : null}
           </View>
           <Card style={{ padding: 10, width: "95%", borderRadius: 10 }}>
-            {todayFoodTable && todayFoodTable[`${meal}`] ? (
-              todayFoodTable[`${meal}`].map((elem) => (
+            {table ? (
+              table.map((elem) => (
                 <CardItem key={elem + Math.random()}>
                   <Body>
                     <Text
@@ -209,14 +277,15 @@ class Main extends Component {
           <DateTimePickerModal
             isVisible={isDatePicker}
             mode="date"
-            onConfirm={(date) =>
+            onConfirm={(date) => {
+              this.getTable(code, this.dateToString(date), meal);
               setDate(
                 date.getFullYear(),
                 date.getMonth() + 1,
                 date.getDate(),
                 false
-              )
-            }
+              );
+            }}
             onCancel={() => setShowDatePicker(false)}
             maximumDate={fixDate.getTime() + MONTH}
             minimumDate={fixDate.getTime() - MONTH}

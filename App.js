@@ -48,8 +48,6 @@ export default class App extends React.Component {
       return <AppLoading />;
     }
 		
-		console.log();
-		
     return (
 	  <Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>

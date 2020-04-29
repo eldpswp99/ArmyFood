@@ -1,21 +1,12 @@
 import React, { Component } from "react";
 import { Container, Icon, Button, Text } from "native-base";
 import { Image, View } from "react-native";
-import axios from "axios";
 import { DAY } from "../../Enums";
 
 class Loader extends Component {
   getData = async () => {
     let mealDate = new Date();
-    const {
-      setFixDate,
-      load,
-      allCode,
-      addData,
-      loadEnd,
-      food,
-      fixDay,
-    } = this.props;
+    const { setFixDate, load, loadEnd } = this.props;
     const hour = mealDate.getHours();
 
     setFixDate(
@@ -45,26 +36,7 @@ class Loader extends Component {
   }
 
   render() {
-    return (
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          backgroundColor: "white",
-        }}
-      >
-        <Image
-          source={require("../../../assets/images/K02.png")}
-          style={{ width: 100, height: 100 }}
-        />
-        <Text
-          style={{ fontFamily: "BMHANNA_11yrs", fontSize: 25, marginTop: 10 }}
-        >
-          오늘의 짬
-        </Text>
-      </View>
-    );
+    return <View />;
   }
 }
 

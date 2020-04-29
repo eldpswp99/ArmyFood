@@ -6,7 +6,6 @@ import { actionCreators } from "../../reducer";
 function mapStateToProps(state) {
   const {
     code,
-    food,
     isDatePicker,
     isLoading,
     year,
@@ -17,16 +16,17 @@ function mapStateToProps(state) {
     isAllergic,
     fixYear,
     fixMonth,
+    table,
     fixDay,
   } = state;
 
   return {
     code,
-    food,
     isDatePicker,
     isLoading,
     year,
     month,
+    table,
     day,
     meal,
     isAllergic,
@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch) {
       actionCreators.setShowDatePicker,
       dispatch
     ),
-    nextMeal: bindActionCreators(actionCreators.nextMeal, dispatch),
+    setMeal: bindActionCreators(actionCreators.setMeal, dispatch),
     refresh: bindActionCreators(actionCreators.refresh, dispatch),
     setTable: bindActionCreators(actionCreators.setTable, dispatch),
   };
