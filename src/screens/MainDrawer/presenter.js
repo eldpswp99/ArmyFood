@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as Enums from "../../Enums";
 import { Linking } from "expo";
 import { EMAIL } from "react-native-dotenv";
+import debounce from "lodash.debounce";
 
 import {
   createDrawerNavigator,
@@ -23,7 +24,10 @@ function DrawerContent(props) {
       <DrawerItemList {...props} />
       <DrawerItem
         label="개발자에게 메일보내기"
-        onPress={() => Linking.openURL(`mailto:${EMAIL}`)}
+        onPress={debounce(() => {
+          Linking.openURL(`mailto:${EMAIL}`);
+          props.navigation.closeDrawer();
+        }, 200)}
       />
     </DrawerContentScrollView>
   );

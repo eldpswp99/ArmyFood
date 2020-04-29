@@ -14,7 +14,7 @@ import {
   Card,
   CardItem,
 } from "native-base";
-import { View, Platform, StyleSheet, StatusBar } from "react-native";
+import { View, Alert } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Appearance } from "react-native-appearance";
 import axios from "axios";
@@ -76,17 +76,24 @@ class Main extends Component {
   }
 
   async getTable(code, date, type) {
+    const { setTable } = this.props;
+
     try {
       let food = (await axios.get(`${API_ADDRESS}/${code}/${date}/${type}`))
         .data;
 
       food = food ? food[`${type}`] : null;
 
-      const { setTable } = this.props;
-
       setTable(food);
     } catch (error) {
-      console.error(error);
+      if (error.response.status !== 429) console.error(error);
+      else {
+        Alert.alert(
+          "앗!",
+          "짧은 시간동안 너무 많은 조작을 할 경우 잠시동안 서비스가 중지됩니다.\n잠시 뒤에 이용해 주세요."
+        );
+        setTable(false);
+      }
     }
   }
 

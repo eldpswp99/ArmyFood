@@ -46,17 +46,24 @@ class SettingCodeByTable extends Component {
   }
 
   async getTable(code, date, type) {
+    const { setTable } = this.props;
+
     try {
       let food = (await axios.get(`${API_ADDRESS}/${code}/${date}/${type}`))
         .data;
 
       food = food ? food[`${type}`] : null;
 
-      const { setTable } = this.props;
-
       setTable(food);
     } catch (error) {
-      console.error(error);
+      if (error.response.status !== 429) console.error(error);
+      else {
+        Alert.alert(
+          "앗!",
+          "짧은 시간동안 너무 많은 조작을 할 경우 잠시동안 서비스가 중지됩니다.\n잠시 뒤에 이용해 주세요."
+        );
+        setTable(false);
+      }
     }
   }
 
@@ -74,7 +81,6 @@ class SettingCodeByTable extends Component {
     const {
       inputTable,
       posCode,
-      allCode,
       question,
       fixYear,
       fixMonth,
@@ -90,7 +96,6 @@ class SettingCodeByTable extends Component {
     } = this.props;
     const { navigation } = this.props;
     const { index } = navigation.dangerouslyGetState();
-    let alreadyNavigated = false;
 
     return (
       <Container>
