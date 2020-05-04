@@ -6,7 +6,7 @@ import { DAY } from "../../Enums";
 class Loader extends Component {
   getData = async () => {
     let mealDate = new Date();
-    const { setFixDate, load, loadEnd } = this.props;
+    const { setFixDate, load, loadEnd, allCode, setCodeInv } = this.props;
     const hour = mealDate.getHours();
 
     setFixDate(
@@ -27,6 +27,13 @@ class Loader extends Component {
       mealDate.getDate(),
       meal
     );
+
+    const codeInv = {};
+    allCode.forEach((elem, idx) => {
+      codeInv[`${elem}`] = idx;
+    });
+
+    setCodeInv(codeInv);
 
     loadEnd();
   };

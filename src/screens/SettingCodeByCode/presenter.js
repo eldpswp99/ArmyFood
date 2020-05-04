@@ -24,16 +24,13 @@ class SettingCodeByCode extends Component {
     const { index } = navigation.dangerouslyGetState();
     if (index > 0) navigation.goBack();
   }
-
   async getTable(code, date, type) {
     const { setTable } = this.props;
-
     try {
       let food = (await axios.get(`${API_ADDRESS}/${code}/${date}/${type}`))
         .data;
 
       food = food ? food[`${type}`] : null;
-
       setTable(food);
     } catch (error) {
       if (error.response.status !== 429) console.error(error);
@@ -68,6 +65,11 @@ class SettingCodeByCode extends Component {
       month,
       meal,
       day,
+      fixYear,
+      fixMonth,
+      fixDay,
+      fixMeal,
+      refresh,
     } = this.props;
     const { navigation } = this.props;
     return (
@@ -117,9 +119,10 @@ class SettingCodeByCode extends Component {
               } else {
                 this.getTable(
                   inputCode,
-                  this.dateToString(new Date(year, month - 1, day)),
-                  meal
+                  this.dateToString(new Date(fixYear, fixMonth - 1, fixDay)),
+                  fixMeal
                 );
+                refresh();
                 setCode(inputCode);
                 init
                   ? navigation.navigate("SettingAllergic")

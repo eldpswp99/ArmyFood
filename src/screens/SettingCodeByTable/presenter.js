@@ -26,7 +26,6 @@ class SettingCodeByTable extends Component {
   addZero(elem) {
     return elem < 10 ? "0" + elem : elem;
   }
-
   stableGoBack() {
     const { navigation } = this.props;
     const { index } = navigation.dangerouslyGetState();
@@ -34,11 +33,15 @@ class SettingCodeByTable extends Component {
   }
 
   async nextPos(prevPos, input, date) {
+    const { codeInv, allCode } = this.props;
+    const posBit = prevPos.reduce((acc, cur) => {
+      return acc + (1 << codeInv[`${cur}`]);
+    }, 0);
     const { data } = await axios.get(`${API_ADDRESS}/setcode`, {
       params: {
         input,
         date,
-        posCode: prevPos,
+        posBit,
       },
     });
 
@@ -84,6 +87,7 @@ class SettingCodeByTable extends Component {
       question,
       fixYear,
       fixMonth,
+      fixDay,
       setInputTable,
       cancelSetTable,
       submitSetTable,
@@ -93,10 +97,12 @@ class SettingCodeByTable extends Component {
       month,
       day,
       meal,
+      fixMeal,
+      refresh,
     } = this.props;
+
     const { navigation } = this.props;
     const { index } = navigation.dangerouslyGetState();
-
     return (
       <Container>
         <Header>
@@ -168,9 +174,10 @@ class SettingCodeByTable extends Component {
                 );
                 this.getTable(
                   nextPosCode[0],
-                  this.dateToString(new Date(year, month - 1, day)),
-                  meal
+                  this.dateToString(new Date(fixYear, fixMonth - 1, fixDay)),
+                  fixMeal
                 );
+                refresh();
                 submitSetTable(nextPosCode[0]);
                 init
                   ? navigation.navigate("SettingAllergic")

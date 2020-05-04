@@ -4,7 +4,19 @@ import SettingCodeByCode from "./presenter";
 import { actionCreators } from "../../reducer";
 
 function mapStateToProps(state) {
-  const { inputCode, allCode, init, year, month, day, meal } = state;
+  const {
+    inputCode,
+    allCode,
+    init,
+    year,
+    month,
+    day,
+    meal,
+    fixYear,
+    fixMonth,
+    fixDay,
+    fixMeal,
+  } = state;
 
   return {
     inputCode,
@@ -14,6 +26,10 @@ function mapStateToProps(state) {
     month,
     day,
     meal,
+    fixYear,
+    fixMonth,
+    fixDay,
+    fixMeal,
   };
 }
 
@@ -22,6 +38,7 @@ function mapDispatchToProps(dispatch) {
     setCode: bindActionCreators(actionCreators.setCode, dispatch),
     setInputCode: bindActionCreators(actionCreators.setInputCode, dispatch),
     setTable: bindActionCreators(actionCreators.setTable, dispatch),
+    refresh: bindActionCreators(actionCreators.refresh, dispatch),
   };
 }
 

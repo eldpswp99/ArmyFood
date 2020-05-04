@@ -34,7 +34,6 @@ class Main extends Component {
     const newDay = new Date(
       new Date(year, month - 1, day).getTime() + DAY * addnum
     );
-
     return newDay;
   }
 
@@ -50,10 +49,8 @@ class Main extends Component {
     for (let i = 1; i <= 18; i++) {
       if (isAllergic[i] && food.includes(`(${i})`)) return true;
     }
-
     return false;
   }
-
   yesterOrTodayOrTomorrow() {
     const { year, month, day, fixYear, fixDay, fixMonth } = this.props;
 
@@ -141,7 +138,6 @@ class Main extends Component {
       fixMeal,
       refresh,
     } = this.props;
-
     if (isLoading) return <Loader />;
 
     let mealVal;
@@ -303,5 +299,4 @@ class Main extends Component {
     );
   }
 }
-
 export default Main;

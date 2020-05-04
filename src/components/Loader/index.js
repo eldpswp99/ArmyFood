@@ -17,6 +17,7 @@ function mapDispatchToProps(dispatch) {
     loadEnd: bindActionCreators(actionCreators.loadEnd, dispatch),
     load: bindActionCreators(actionCreators.load, dispatch),
     setFixDate: bindActionCreators(actionCreators.setFixDate, dispatch),
+    setCodeInv: bindActionCreators(actionCreators.setCodeInv, dispatch),
   };
 }
 

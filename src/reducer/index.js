@@ -23,6 +23,7 @@ const SUBMIT_SET_TABLE = "SUBMIT_SET_TABLE";
 const NEXT_QUESTION_SET_TABLE = "NEXT_QUESTION_SET_TABLE";
 const LOAD = "LOAD";
 const REFRESH = "REFRESH";
+const SET_CODE_INV = "SET_CODE_INV";
 
 //Action Creators
 
@@ -169,6 +170,13 @@ function refresh() {
   };
 }
 
+function setCodeInv(codeInv) {
+  return {
+    type: SET_CODE_INV,
+    codeInv,
+  };
+}
+
 //Reducer
 
 const initialState = {
@@ -208,6 +216,7 @@ const initialState = {
     "1691",
     "3333",
   ],
+  codeInv: {},
   allAllergic: [
     {
       num: 1,
@@ -363,6 +372,8 @@ function reducer(state = initialState, action) {
       );
     case REFRESH:
       return applyRefresh(state);
+    case SET_CODE_INV:
+      return applySetCodeInv(state, action.codeInv);
     default:
       return state;
   }
@@ -536,6 +547,13 @@ function applyRefresh(state) {
   };
 }
 
+function applySetCodeInv(state, codeInv) {
+  return {
+    ...state,
+    codeInv,
+  };
+}
+
 //Export Action Creators
 
 const actionCreators = {
@@ -559,6 +577,7 @@ const actionCreators = {
   submitSetTable,
   load,
   refresh,
+  setCodeInv,
 };
 
 export { actionCreators };

@@ -16,6 +16,9 @@ function mapStateToProps(state) {
     month,
     day,
     meal,
+    codeInv,
+    fixMeal,
+    fixDay,
   } = state;
 
   return {
@@ -30,6 +33,9 @@ function mapStateToProps(state) {
     month,
     day,
     meal,
+    fixDay,
+    codeInv,
+    fixMeal,
   };
 }
 
@@ -42,6 +48,7 @@ function mapDispatchToProps(dispatch) {
     cancelSetTable: bindActionCreators(actionCreators.cancelSetTable, dispatch),
     submitSetTable: bindActionCreators(actionCreators.submitSetTable, dispatch),
     setTable: bindActionCreators(actionCreators.setTable, dispatch),
+    refresh: bindActionCreators(actionCreators.refresh, dispatch),
   };
 }
 
