@@ -208,5 +208,4 @@ class SettingCodeByTable extends Component {
     );
   }
 }
-
 export default SettingCodeByTable;

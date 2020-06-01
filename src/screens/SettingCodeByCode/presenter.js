@@ -137,5 +137,4 @@ class SettingCodeByCode extends Component {
     );
   }
 }
-
 export default SettingCodeByCode;

@@ -20,7 +20,6 @@ import { Appearance } from "react-native-appearance";
 import axios from "axios";
 
 import { DAY, MONTH } from "../../Enums";
-import Loader from "../../components/Loader";
 import { API_ADDRESS } from "react-native-dotenv";
 
 class Main extends Component {
@@ -72,6 +71,41 @@ class Main extends Component {
     )}${this.addZero(date.getDate())}`;
   }
 
+  getData = () => {
+    let mealDate = new Date();
+    const { setFixDate, load, loadEnd, allCode, setCodeInv, code } = this.props;
+    const hour = mealDate.getHours();
+
+    setFixDate(
+      mealDate.getFullYear(),
+      mealDate.getMonth() + 1,
+      mealDate.getDate()
+    );
+    let meal = "brst";
+    if (9 <= hour && hour <= 12) meal = "lunc";
+    else if (13 <= hour && hour <= 18) meal = "dinr";
+    else if (hour >= 19) {
+      mealDate = new Date(mealDate.getTime() + DAY);
+    }
+
+    this.getTable(code, this.dateToString(mealDate), meal);
+    load(
+      mealDate.getFullYear(),
+      mealDate.getMonth() + 1,
+      mealDate.getDate(),
+      meal
+    );
+
+    const codeInv = {};
+    allCode.forEach((elem, idx) => {
+      codeInv[`${elem}`] = idx;
+    });
+
+    setCodeInv(codeInv);
+
+    loadEnd();
+  };
+
   async getTable(code, date, type) {
     const { setTable } = this.props;
 
@@ -112,8 +146,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    const { code, year, month, day, meal } = this.props;
-    this.getTable(code, this.dateToString(new Date()), `${meal}`);
+    this.getData();
   }
 
   render() {
@@ -138,7 +171,6 @@ class Main extends Component {
       fixMeal,
       refresh,
     } = this.props;
-    if (isLoading) return <Loader />;
 
     let mealVal;
     const curDate = new Date(year, month - 1, day);
@@ -299,4 +331,5 @@ class Main extends Component {
     );
   }
 }
+
 export default Main;
