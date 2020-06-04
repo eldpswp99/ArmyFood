@@ -40,7 +40,7 @@ class MainDrawer extends Component {
         drawerContent={(props) => <DrawerContent {...props} />}
         initialRouteName="Main"
       >
-        <Drawer.Screen name="앱 버전 : 2.0.0" component={Main} />
+        <Drawer.Screen name="앱 버전 : 2.0.3" component={Main} />
 
         <Drawer.Screen name="알레르기 설정" component={SettingAllergic} />
         <Drawer.Screen name="식단설정-식단표" component={SettingCodeByTable} />

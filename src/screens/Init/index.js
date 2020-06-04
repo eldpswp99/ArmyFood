@@ -1,21 +1,21 @@
 import { connect } from "react-redux";
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import Init from "./presenter";
-import {actionCreators} from "../../reducer";
+import { actionCreators } from "../../reducer";
 
-function mapStateToProps(state){
-	
-	const {isLoading} = state;
-	
-	return {
-		isLoading
-	}
+function mapStateToProps(state) {
+  const { allCode } = state;
+
+  return {
+    allCode,
+  };
 }
 
-function mapDispatchToProps(dispatch){
-	return {
-
-	}
+function mapDispatchToProps(dispatch) {
+  return {
+    setFixDate: bindActionCreators(actionCreators.setFixDate, dispatch),
+    setCodeInv: bindActionCreators(actionCreators.setCodeInv, dispatch),
+  };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Init);
+export default connect(mapStateToProps, mapDispatchToProps)(Init);

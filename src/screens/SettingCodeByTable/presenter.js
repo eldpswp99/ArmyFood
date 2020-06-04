@@ -103,6 +103,7 @@ class SettingCodeByTable extends Component {
 
     const { navigation } = this.props;
     const { index } = navigation.dangerouslyGetState();
+
     return (
       <Container>
         <Header>
@@ -182,11 +183,11 @@ class SettingCodeByTable extends Component {
                 init
                   ? navigation.navigate("SettingAllergic")
                   : this.stableGoBack();
-              } else if (nextPosCode.length > 1 && question <= 3) {
+              } else if (nextPosCode.length > 1 && question <= 2) {
                 nextQuestion(nextPosCode);
-              } else if (question > 3 && nextPosCode.length == 2) {
+              } else if (question > 2 && nextPosCode.length == 2) {
                 Alert.alert(
-                  "2020년 4월 공지",
+                  "2020년 6월 공지",
                   "올바르게 입력했는데도 계속해서 후보 2개만 남는다면, 코드는 6335 또는 2171입니다. 현재 두 코드의 식단표가 동일합니다. 두 코드 중의 하나를 입력해서 사용하고, 추후 맞지 않는 경우 다른 코드로 사용하세요."
                 );
                 cancelSetTable();
@@ -208,4 +209,5 @@ class SettingCodeByTable extends Component {
     );
   }
 }
+
 export default SettingCodeByTable;

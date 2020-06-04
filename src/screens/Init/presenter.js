@@ -2,6 +2,26 @@ import React, { Component } from "react";
 import { Container, Icon, Button, Text } from "native-base";
 
 class Init extends Component {
+  getData = () => {
+    let mealDate = new Date();
+    const { setFixDate, setCodeInv, allCode } = this.props;
+    setFixDate(
+      mealDate.getFullYear(),
+      mealDate.getMonth() + 1,
+      mealDate.getDate()
+    );
+
+    const codeInv = {};
+    allCode.forEach((elem, idx) => {
+      codeInv[`${elem}`] = idx;
+    });
+
+    setCodeInv(codeInv);
+  };
+
+  componentDidMount() {
+    this.getData();
+  }
   render() {
     const { isLoading, navigation } = this.props;
 
