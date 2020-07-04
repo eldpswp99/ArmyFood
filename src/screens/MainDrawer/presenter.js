@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import * as Enums from "../../Enums";
-import { Linking } from "expo";
-import { EMAIL } from "react-native-dotenv";
+import Rate, { AndroidMarket } from "react-native-rate";
 import debounce from "lodash.debounce";
 
 import {
@@ -23,10 +21,16 @@ function DrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <DrawerItem
-        label="개발자에게 메일보내기"
+        label="리뷰 남기기"
         onPress={debounce(() => {
-          Linking.openURL(`mailto:${EMAIL}`);
-          props.navigation.closeDrawer();
+          const options = {
+            GooglePackageName: "com.eldpswp99.foodtable",
+            preferredAndriodMarker: AndroidMarket.Google,
+          };
+
+          Rate.rate(options, (success) => {
+            props.navigation.closeDrawer();
+          });
         }, 200)}
       />
     </DrawerContentScrollView>
@@ -40,7 +44,7 @@ class MainDrawer extends Component {
         drawerContent={(props) => <DrawerContent {...props} />}
         initialRouteName="Main"
       >
-        <Drawer.Screen name="앱 버전 : 2.0.3" component={Main} />
+        <Drawer.Screen name="앱 버전 : 2.0.4" component={Main} />
 
         <Drawer.Screen name="알레르기 설정" component={SettingAllergic} />
         <Drawer.Screen name="식단설정-식단표" component={SettingCodeByTable} />

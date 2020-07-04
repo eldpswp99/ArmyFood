@@ -18,7 +18,6 @@ import {
   Input,
 } from "native-base";
 import { View, Platform, StyleSheet, StatusBar, Alert } from "react-native";
-import * as Enums from "../../Enums";
 import { API_ADDRESS } from "react-native-dotenv";
 import debounce from "lodash.debounce";
 

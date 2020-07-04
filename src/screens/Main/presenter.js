@@ -322,8 +322,8 @@ class Main extends Component {
               );
             }}
             onCancel={() => setShowDatePicker(false)}
-            maximumDate={fixDate.getTime() + MONTH}
-            minimumDate={fixDate.getTime() - MONTH}
+            maximumDate={new Date(fixDate.getTime() + MONTH)}
+            minimumDate={new Date(fixDate.getTime() - MONTH)}
             isDarkModeEnabled={darkMode}
           />
         </Content>
