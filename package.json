@@ -15,7 +15,7 @@
     "@react-navigation/drawer": "^5.0.0",
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "expo": "^37.0.0",
