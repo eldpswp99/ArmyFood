@@ -21,7 +21,7 @@
     "expo": "^37.0.0",
     "expo-font": "~8.1.0",
     "expo-modal": "^1.0.7",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "mem": "^6.1.0",
     "minimist": "^1.2.5",
